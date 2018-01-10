@@ -7,14 +7,12 @@
 
 ## Installing "basicTrendline" package in R
 
-- from R 
-
-Open R software and run:
+1\. from R (Open R software and run:)
 
 	install.packages("basicTrendline")
 	library(basicTrendline)
 
-- from Github
+2\. from Github 
 
 You can install directly **from GitHub** if you have the devtools package installed:
 
@@ -53,7 +51,7 @@ You can chanage other models, using the same function "trendline()"
 
 **Moreover**, we can draw **different regression lines in one plot!!!**
 
-<img src="docs/images/Multilines.png" width="890"/>
+<img src="docs/images/Multilines.png" width="490"/>
 
 	plot(x1,y1,main="Different regression lines in one plot")
 	
@@ -100,12 +98,12 @@ p-value of model= 2.44924-5 < 2.24891e-4
 
 ## Graphics
 
-<img src="docs/images/line2P.png" width="890"/>
-<img src="docs/images/line3P.png" width="890"/>
-<img src="docs/images/log.png" width="890"/>
-<img src="docs/images/log0.5.png" width="890"/>
-<img src="docs/images/exp.png" width="890"/>
-<img src="docs/images/power.png" width="890"/>
+<img src="docs/images/line2P.png" width="490"/>
+<img src="docs/images/line3P.png" width="490"/>
+<img src="docs/images/log.png" width="490"/>
+<img src="docs/images/log0.5.png" width="490"/>
+<img src="docs/images/exp.png" width="490"/>
+<img src="docs/images/power.png" width="490"/>
 
 
 To see examples on how to use "basicTrendline" in R software, you can run the following R code if you have the "basicTrendline" package installed:
