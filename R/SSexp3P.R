@@ -1,26 +1,3 @@
-#' Self-Starting Nls 'exp3P' Regression Model
-#'
-#' This selfStart model evaluates the exponential regression function (formula as: y=a*exp(b*x)+c). It has an initial attribute that will evaluate initial estimates of the parameters a, b, and c for a given set of data.
-#'
-#' @usage SSexp3P(predictor, a, b, c)
-#' @param predictor  a numeric vector of values at which to evaluate the model.
-#' @param a,b,c Three numeric parameters responsing to the exp3P model.
-#' @export
-#' @examples
-#' library(basicTrendline)
-#' x<-1:5
-#' y<-c(2,4,8,16,28)
-#' xy<-data.frame(x,y)
-#' getInitial(y ~ SSexp3P(x,a,b,c), data = xy)
-#' ## Initial values are in fact the converged values
-#'
-#' fitexp3P <- nls(y~SSexp3P(x,a,b,c), data=xy)
-#' summary(fitexp3P)
-#'
-#' @author Weiping Mei \email{meiweipingg@163.com}
-#' @seealso  \code{\link{trendline}}, \code{\link{SSexp3P}}, \code{\link{SSpower3P}}, \code{\link[stats]{nls}}, \code{\link[stats]{selfStart}}
-
-
 
 # selfStart method for exp3P model (formula as y = a *exp(b*x)+ c)
 SSexp3P<-selfStart(

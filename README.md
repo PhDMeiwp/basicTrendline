@@ -1,10 +1,21 @@
-# basicTrendline 1.0.1
+# basicTrendline: an R package for adding trendline of basic regression models to plot
 
-> The "basicTrendline" is an alternative name for previous "[fitting](https://github.com/PhDMeiwp/fitting)" package.
+[![cran version](http://www.r-pkg.org/badges/version/basicTrendline)](http://cran.rstudio.com/web/packages/basicTrendline) 
+[![rstudio mirror downloads](http://cranlogs.r-pkg.org/badges/grand-total/basicTrendline)](https://github.com/metacran/cranlogs.app)
+[![HitCount](http://hits.dwyl.io/PhDMeiwp/basicTrendline.svg)](http://hits.dwyl.io/PhDMeiwp/basicTrendline)
 
 ## Installing "basicTrendline" package in R
 
-You can install directly from GitHub if you have the devtools package installed:
+- from R 
+
+Open R software and run:
+
+	install.packages("basicTrendline")
+	library(basicTrendline)
+
+- from Github
+
+You can install directly **from GitHub** if you have the devtools package installed:
 
     install.packages("devtools")
 	library(devtools)   
@@ -25,7 +36,7 @@ and run
 
 	trendline(x,y,model="exp3P", summary=TRUE, eDigit=10, ePos="topleft",linecolor="red")  
 	
-You can chanage other models, using the same function "rmle()"
+You can chanage other models, using the same function "trendline()"
 
 “model” is one of c('lin2P','line3P','log2P','exp3P','power3P')
 	
@@ -38,6 +49,19 @@ You can chanage other models, using the same function "rmle()"
 - "exp3P"     # y=a\*exp(b\*x)+c
 
 - "power3P"   # y=a*x^b+c)
+
+**Moreover**, we can draw **different regression lines in one plot!!!**
+
+<img src="docs/images/Multilines.png" width="890"/>
+
+	plot(x1,y1,main="Different regression lines in one plot")
+	
+	library(basicTrendline)
+	trendline(x1,y1,model="line2P",plot=FALSE,ePos="none",linecolor="red")
+	trendline(x1,y1,model="log2P",plot=FALSE,ePos="none",linecolor="blue",lty=2)
+	trendline(x1,y1,model="exp3P",plot=FALSE,ePos="none",linecolor="black",lty=3)
+	legend("bottomright",c("line2P","log2P","exp3P"), lty=c(1,2,3),col=c("red","blue","black"))
+
 
 ## Highlights
 
@@ -75,12 +99,12 @@ p-value of model= 2.44924-5 < 2.24891e-4
 
 ## Graphics
 
-![line2P.png](https://i.loli.net/2017/12/20/5a39cf4954e69.png)
-![line3P.png](https://i.loli.net/2017/12/20/5a39d001c5049.png)
-![log.png](https://i.loli.net/2017/12/20/5a39cf4962808.png)
-![log0.5.png](https://i.loli.net/2017/12/20/5a39cf4962781.png)
-![exp.png](https://i.loli.net/2017/12/20/5a39cf495184e.png)
-![power.png](https://i.loli.net/2017/12/20/5a39cf496566f.png)
+<img src="docs/images/line2P.png" width="890"/>
+<img src="docs/images/line3P.png" width="890"/>
+<img src="docs/images/log.png" width="890"/>
+<img src="docs/images/log0.5.png" width="890"/>
+<img src="docs/images/exp.png" width="890"/>
+<img src="docs/images/power.png" width="890"/>
 
 
 To see examples on how to use "basicTrendline" in R software, you can run the following R code if you have the "basicTrendline" package installed:
@@ -100,3 +124,10 @@ R codes contributed by
 - adding regression line for nonlinear regression: http://blog.sciencenet.cn/blog-651374-1014133.html
 - R codes for 'print.summary.nls of exp3P and power3P' cite from https://github.com/SurajGupta/r-source/blob/master/src/library/stats/R/nls.R
 - and so on...
+
+## Appendix
+
+The PDF files of this R package is available at https://cran.r-project.org/web/packages/basicTrendline/index.html 
+
+
+**If you have any question or comment to this package, tell me at [here](http://meiweiping.cn/en/basicTrendline: an R package for adding trendline of basic regression models to plot/).**

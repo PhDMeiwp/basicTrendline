@@ -1,25 +1,3 @@
-#' Self-Starting Nls 'power3P' Regression Model
-#'
-#' This selfStart model evaluates the power regression function (formula as: y=a*x^b+c). It has an initial attribute that will evaluate initial estimates of the parameters a, b, and c for a given set of data.
-#'
-#' @usage SSpower3P(predictor, a, b, c)
-#' @param predictor  a numeric vector of values at which to evaluate the model.
-#' @param a,b,c Three numeric parameters responsing to the exp3P model.
-#' @export
-#' @examples
-#' library(basicTrendline)
-#' x<-1:5
-#' y<-c(2,4,8,20,25)
-#' xy<-data.frame(x,y)
-#' getInitial(y ~ SSpower3P(x,a,b,c), data = xy)
-#' ## Initial values are in fact the converged values
-#'
-#' fitpower3P <- nls(y~SSpower3P(x,a,b,c), data=xy)
-#' summary(fitpower3P)
-#'
-#' @author Weiping Mei \email{meiweipingg@163.com}
-#' @seealso  \code{\link{trendline}}, \code{\link{SSexp3P}}, \code{\link{SSpower3P}}, \code{\link[stats]{nls}}, \code{\link[stats]{selfStart}}
-
 
 # selfStart method for power3P model (formula as y = a *x^b+ c)
 SSpower3P<-selfStart(
