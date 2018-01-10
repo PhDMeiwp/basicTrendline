@@ -2,6 +2,7 @@
 
 [![cran version](http://www.r-pkg.org/badges/version/basicTrendline)](http://cran.rstudio.com/web/packages/basicTrendline) 
 [![rstudio mirror downloads](http://cranlogs.r-pkg.org/badges/grand-total/basicTrendline)](https://github.com/metacran/cranlogs.app)
+[![rstudio mirror downloads](http://cranlogs.r-pkg.org/badges/basicTrendline)](https://github.com/metacran/cranlogs.app)
 [![HitCount](http://hits.dwyl.io/PhDMeiwp/basicTrendline.svg)](http://hits.dwyl.io/PhDMeiwp/basicTrendline)
 
 ## Installing "basicTrendline" package in R
@@ -130,4 +131,4 @@ R codes contributed by
 The PDF files of this R package is available at https://cran.r-project.org/web/packages/basicTrendline/index.html 
 
 
-**If you have any question or comment to this package, tell me at [here](http://meiweiping.cn/en/basicTrendline: an R package for adding trendline of basic regression models to plot/).**
+**If you have any question or comment to this package, tell me at [here](http://meiweiping.cn/en/basicTrendline-an-R-package-for-adding-trendline-of-basic-regression-models-to-plot/).**
