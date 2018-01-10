@@ -126,7 +126,8 @@ R codes contributed by
 
 ## Appendix
 
-The PDF files of this R package is available at https://cran.r-project.org/web/packages/basicTrendline/index.html 
-
+The **DF files** of this R package is available at https://cran.r-project.org/web/packages/basicTrendline/index.html 
 
 **If you have any question or comment to this package, tell me at [here](http://meiweiping.cn/en/basicTrendline-an-R-package-for-adding-trendline-of-basic-regression-models-to-plot/).**
+
+>> 点击进入 [basicTrendline函数包中文介绍入口](http://meiweiping.cn/%E7%94%A8%E4%BA%8E%E5%B8%B8%E8%A7%84%E7%BA%BF%E6%80%A7%E9%9D%9E%E7%BA%BF%E6%80%A7%E6%8B%9F%E5%90%88%E7%9A%84R%E5%87%BD%E6%95%B0%E5%8C%85%EF%BC%88basicTrendline%EF%BC%89%E4%BB%8B%E7%BB%8D/)
