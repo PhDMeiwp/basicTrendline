@@ -80,7 +80,7 @@ a=7347.183
 
 b=43224.4
 
-<font color=red>**adjR^2= 0.97129       # lower adjR^2 value**</font>
+<font color=red>**adjR^2= 0.97129       # lower adjR<sup>2</sup> value**</font>
 
 p-value of model=2.24891e-4
 
@@ -92,7 +92,7 @@ a=-32.703
 
 b=-0.13999
 
-<font color=red>**adjR^2= 0.99346 >  0.97129   # higher (or better ) adjR^2 value**</font>
+<font color=red>**adjR^2= 0.99346 >  0.97129   # higher (or better ) adjR<sup>2</sup> value**</font>
 
 p-value of model= 2.44924-5 < 2.24891e-4
 
@@ -124,10 +124,14 @@ R codes contributed by
 - R codes for 'print.summary.nls of exp3P and power3P' cite from https://github.com/SurajGupta/r-source/blob/master/src/library/stats/R/nls.R
 - and so on...
 
+## Contact
+
+- If you have any question or comment to this package, tell me at [here](http://meiweiping.cn/en/basicTrendline-an-R-package-for-adding-trendline-of-basic-regression-models-to-plot/).**
+
+- Bugs and feature requests can be filed to https://github.com/PhDMeiwp/basicTrendline/issues. [Pull requests](https://github.com/PhDMeiwp/basicTrendline/pulls) are also welcome.
+
 ## Appendix
 
-The **DF files** of this R package is available at https://cran.r-project.org/web/packages/basicTrendline/index.html 
-
-**If you have any question or comment to this package, tell me at [here](http://meiweiping.cn/en/basicTrendline-an-R-package-for-adding-trendline-of-basic-regression-models-to-plot/).**
+The **PDF file** of this R package is available at https://cran.r-project.org/web/packages/basicTrendline/index.html 
 
 >> 点击进入 [basicTrendline函数包中文介绍入口](http://meiweiping.cn/%E7%94%A8%E4%BA%8E%E5%B8%B8%E8%A7%84%E7%BA%BF%E6%80%A7%E9%9D%9E%E7%BA%BF%E6%80%A7%E6%8B%9F%E5%90%88%E7%9A%84R%E5%87%BD%E6%95%B0%E5%8C%85%EF%BC%88basicTrendline%EF%BC%89%E4%BB%8B%E7%BB%8D/)
