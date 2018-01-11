@@ -64,7 +64,7 @@ You can chanage other models, using the same function "trendline()"
 
 ## Highlights
 
-<font color=red>The "basicTrendline" package in R software could output **a better regression result (higher R-squared and lower p-value)** for 'power3P' model（y = ax^b +c） **than those in OriginPro** software.</font> Please see the example below:
+<font color=red>The "basicTrendline" package in R software could output **a better regression result (higher R<sup>2</sup> and lower p-value)** for 'power3P' model（y = ax^b +c） **than those in OriginPro** software.</font> Please see the example below:
 
 >formula as y=a*x^b +c
 
@@ -80,7 +80,7 @@ a=7347.183
 
 b=43224.4
 
-<font color=red>**adjR^2= 0.97129       # lower adjR<sup>2</sup> value**</font>
+<font color=red>**adjR<sup>2</sup>= 0.97129       # lower adjR<sup>2</sup> value**</font>
 
 p-value of model=2.24891e-4
 
@@ -92,7 +92,7 @@ a=-32.703
 
 b=-0.13999
 
-<font color=red>**adjR^2= 0.99346 >  0.97129   # higher (or better ) adjR<sup>2</sup> value**</font>
+<font color=red>**adjR<sup>2</sup>= 0.99346 >  0.97129   # higher (or better ) adjR<sup>2</sup> value**</font>
 
 p-value of model= 2.44924-5 < 2.24891e-4
 
@@ -126,9 +126,9 @@ R codes contributed by
 
 ## Contact
 
-- If you have any question or comment to this package, tell me at [here](http://meiweiping.cn/en/basicTrendline-an-R-package-for-adding-trendline-of-basic-regression-models-to-plot/).**
+- If you have any question or comment to this package, tell me at [here](http://meiweiping.cn/en/basicTrendline-an-R-package-for-adding-trendline-of-basic-regression-models-to-plot/).
 
-- Bugs and feature requests can be filed to https://github.com/PhDMeiwp/basicTrendline/issues. [Pull requests](https://github.com/PhDMeiwp/basicTrendline/pulls) are also welcome.
+- Bugs and feature requests can be filed to https://github.com/PhDMeiwp/basicTrendline/issues. BTW, [Pull requests](https://github.com/PhDMeiwp/basicTrendline/pulls) are also welcome.
 
 ## Appendix
 
