@@ -29,13 +29,27 @@ Then upload your dataset including x and y data, for example
     x<-c(1,30,90,180,360)
     y<-c(4,8,10,11,11)
 
-and run 
+ **[case 1]** and run
 
 	library(basicTrendline)
 
-	trendline(x,y,model="exp3P", summary=TRUE, eDigit=10, ePos="topleft",linecolor="red")  
+	trendline(x,y,model="exp3P", summary=TRUE, eDigit=3, ePos="bottom",linecolor="red")  
+
+<img src="docs/images/exp.png" width="490"/>
+
+**[case 2]** Or, plot and add trendline one by one as follows: 
+
+
+	plot(x,y,yaxt="n",xlab = "your own xaxis name (mg)", ylab = "ylab (‰)")
+	axis(2,las=2)  # Change the y-axis text direction
+
+	library(basicTrendline)
+
+	trendline(x,y,model="power3P", summary=TRUE, eDigit=3, ePos="bottom",linecolor="black") 
+
+<img src="docs/images/power.png" width="490"/>
 	
-You can chanage other models, using the same function "trendline()"
+**[case 3]** You can chanage other models, using the same function "trendline()"
 
 “model” is one of c('lin2P','line3P','log2P','exp3P','power3P')
 	
@@ -49,9 +63,8 @@ You can chanage other models, using the same function "trendline()"
 
 - "power3P"   # y=a*x^b+c)
 
-**Moreover**, we can draw **different regression lines in one plot!!!**
+**[case 4]** Moreover, we can draw **different regression lines in one plot!!!**
 
-<img src="docs/images/Multilines.png" width="490"/>
 
 	plot(x1,y1,main="Different regression lines in one plot")
 	
@@ -61,6 +74,7 @@ You can chanage other models, using the same function "trendline()"
 	trendline(x1,y1,model="exp3P",plot=FALSE,ePos="none",linecolor="black",lty=3)
 	legend("bottomright",c("line2P","log2P","exp3P"), lty=c(1,2,3),col=c("red","blue","black"))
 
+<img src="docs/images/Multilines.png" width="490"/>
 
 ## Highlights
 
