@@ -45,7 +45,7 @@ Then upload your dataset including x and y data, for example
 
 	library(basicTrendline)
 
-	trendline(x,y,model="power3P", summary=TRUE, eDigit=3, ePos="bottom",linecolor="black") 
+	trendline(x,y, plot=FALSE, model="power3P", summary=TRUE, eDigit=3, ePos="bottom",linecolor="black") 
 
 <img src="docs/images/power.png" width="490"/>
 	
