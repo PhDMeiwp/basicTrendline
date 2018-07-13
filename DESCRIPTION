@@ -1,0 +1,17 @@
+Package: basicTrendline
+Version: 1.2.0
+Date: 2018-07-13
+Title: Add Trendline of Basic Regression Models to Plot
+Author: Weiping Mei, Guangchuang Yu, Jiangshan Lai, Qiang Rao and Yu Umezawa
+Maintainer: Weiping Mei <meiweipingg@163.com>
+Description: Add trendline of basic linear or nonlinear regression models and show equation to plot as simple as possible.
+Depends: R (>= 2.1.0)
+Imports:
+    graphics,
+    stats
+License: GPL-3
+URL: https://github.com/PhDMeiwp/basicTrendline
+LazyData: true
+RoxygenNote: 6.0.1
+
+

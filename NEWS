@@ -1,0 +1,11 @@
+Changes in version 1.2.0
+------------------------------------------------------------------------------
+Date: 2018-07-13
+* change the expression for `model` of `exp3P` using a supscript
+* add `trendline_summary()` function
+* add `SSexp2P()` function
+* add `SSpower2P` function
+* add `Pvalue.corrected` argument in `trendline()` and `trendline_summary()` , for P-vlaue calculation for non-linear regression.
+* add `Details` in `trendline()` and `trendline_summary()` 
+* add `...` argument in `trendline()` as same as those in `plot()`
+
