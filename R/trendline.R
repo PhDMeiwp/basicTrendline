@@ -34,12 +34,14 @@
 #' @details The linear models (line2P, line3P, log2P) in this package are estimated by \code{\link[stats]{lm}} function, \cr while the nonlinear models (exp2P, exp3P, power2P, power3P) are estimated by \code{\link[stats]{nls}} function (i.e., least-squares method).\cr\cr The argument 'Pvalue.corrected' is workful for non-linear regression only.\cr\cr If "Pvalue.corrected = TRUE", the P-value is calculated by using "Residual Sum of Squares" and "Corrected Total Sum of Squares (i.e. sum((y-mean(y))^2))".\cr If "Pvalue.corrected = TRUE", the P-value is calculated by using "Residual Sum of Squares" and "Uncorrected Total Sum of Squares (i.e. sum(y^2))".
 #' @note
 #' Confidence intervals for nonlinear regression (i.e., objects of class
-#' \code{nls}) are based on the linear approximation described in Bates & Watts 
-#' (2007).
+#' \code{nls}) are based on the linear approximation described in Bates & Watts (2007) and Greenwell & Schubert-Kabban (2014).
 #'
 #' @references
 #' Bates, D. M., and Watts, D. G. (2007)
 #' \emph{Nonlinear Regression Analysis and its Applications}. Wiley.
+#' 
+#' Greenwell B. M., and Schubert-Kabban, C. M. (2014)
+#' \emph{investr: An R Package for Inverse Estimation}. The R Journal, 6(1), 90-100. 
 #' @return NULL
 #' @examples
 #' library(basicTrendline)

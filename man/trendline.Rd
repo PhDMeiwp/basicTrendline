@@ -65,8 +65,7 @@ The linear models (line2P, line3P, log2P) in this package are estimated by \code
 }
 \note{
 Confidence intervals for nonlinear regression (i.e., objects of class
-\code{nls}) are based on the linear approximation described in Bates & Watts 
-(2007).
+\code{nls}) are based on the linear approximation described in Bates & Watts (2007) and Greenwell & Schubert-Kabban (2014).
 }
 \examples{
 library(basicTrendline)
@@ -95,6 +94,9 @@ trendline(x4, y4, model="exp3P", ePos="bottom", CI.color = NA)
 \references{
 Bates, D. M., and Watts, D. G. (2007)
 \emph{Nonlinear Regression Analysis and its Applications}. Wiley.
+
+Greenwell B. M., and Schubert-Kabban, C. M. (2014)
+\emph{investr: An R Package for Inverse Estimation}. The R Journal, 6(1), 90-100.
 }
 \seealso{
 \code{\link{trendline}}, \code{\link{SSexp3P}}, \code{\link{SSpower3P}}, \code{\link[stats]{nls}}, \code{\link[stats]{selfStart}}, \code{\link[investr]{plotFit}}
