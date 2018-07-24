@@ -46,6 +46,56 @@ Or the development version from github:
 - add `Details` in `trendline()` and `trendline_summary()` 
 - add `...` argument in `trendline()` as same as those in `plot()`
 
+---
+
+# Examples
+	
+		library(basicTrendline)
+		x1 <- 1:5
+		x2 <- -2:2
+		x3 <- c(101,105,140,200,660)
+		x4 <- -5:-1
+
+		y1 <- c(2,14,18,19,20)       # increasing convex  trend
+		y2 <- c(-2,-14,-18,-19,-20)  # decreasing concave trend
+		y3 <- c(2,4,16,38,89)        # increasing concave trend
+		y4 <- c(-2,-4,-16,-38,-89)   # decreasing convex  trend
+
+ **[case 1] default (plot, regression line, confidence interval)** 
+
+		library(basicTrendline)
+		trendline(x1, y1, model="line2P", summary=TRUE, eDigit=10)
+
+ <img src="docs/images/case1.png" width="490"/>
+
+
+**[case 2] show equation only** 
+
+		trendline(x1, y1, model="line2P", show.equation = TRUE, show.Rpvalue = FALSE)
+
+<img src="docs/images/case2.png" width="490"/>
+	
+**[case 3]  'eSize' is used to change the font size of equation** 
+
+		trendline(x2, y2, model="line3P", summary=FALSE,ePos="topright", linecolor="red", eSize=0.7)
+
+<img src="docs/images/case3.png" width="490"/>
+
+
+**[case 4] lines of confidenc interval only (i.e. not fill)**
+
+		trendline(x3, y3, model="log2P", CI.fill = FALSE, CI.color = "black", CI.lty = 2)
+
+<img src="docs/images/case4.png" width="490"/>
+
+
+**[case 5] trendliine only (i.e. without confidence interval)**
+
+		trendline(x4, y4, model="exp3P", ePos="bottom", CI.color = NA)
+	
+<img src="docs/images/case5.png" width="490"/>
+
+---
 
 ## Description
 
@@ -174,53 +224,6 @@ p, indicates the p-value of each regression model.
 
 AIC or BIC, indicate the Akaike's Information Criterion or Bayesian Information Criterion for fitted model. Click AIC for details. The smaller the AIC or BIC, the better the model.
 
-
-# Examples
-	
-		library(basicTrendline)
-		x1 <- 1:5
-		x2 <- -2:2
-		x3 <- c(101,105,140,200,660)
-		x4 <- -5:-1
-
-		y1 <- c(2,14,18,19,20)       # increasing convex  trend
-		y2 <- c(-2,-14,-18,-19,-20)  # decreasing concave trend
-		y3 <- c(2,4,16,38,89)        # increasing concave trend
-		y4 <- c(-2,-4,-16,-38,-89)   # decreasing convex  trend
-
- **[case 1] default (plot, regression line, confidence interval)** 
-
-		library(basicTrendline)
-		trendline(x1, y1, model="line2P", summary=TRUE, eDigit=10)
-
- <img src="docs/images/case1.png" width="490"/>
-
-
-**[case 2] show equation only** 
-
-		trendline(x1, y1, model="line2P", show.equation = TRUE, show.Rpvalue = FALSE)
-
-<img src="docs/images/case2.png" width="490"/>
-	
-**[case 3]  'eSize' is used to change the font size of equation** 
-
-		trendline(x2, y2, model="line3P", summary=FALSE,ePos="topright", linecolor="red", eSize=0.7)
-
-<img src="docs/images/case3.png" width="490"/>
-
-
-**[case 4] lines of confidenc interval only (i.e. not fill)**
-
-		trendline(x3, y3, model="log2P", CI.fill = FALSE, CI.color = "black", CI.lty = 2)
-
-<img src="docs/images/case4.png" width="490"/>
-
-
-**[case 5] trendliine only (i.e. without confidence interval)**
-
-		trendline(x4, y4, model="exp3P", ePos="bottom", CI.color = NA)
-	
-<img src="docs/images/case5.png" width="490"/>
 
 ---
 
