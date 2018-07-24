@@ -3,14 +3,22 @@ Version: 2.0.1
 Date: 2018-07-24
 Title: Add Trendline of Basic Regression Models to Plot
 Author: Weiping Mei, Guangchuang Yu, Jiangshan Lai, Qiang Rao and Yu Umezawa
+Authors@R: c(
+		person("Weiping", "Mei",     email = "meiweipingg@163.com", role = c("aut", "cre", "cph"), comment = c(ORCID = "0000-0001-6400-9862")),
+		person("Guangchuang", "Yu",     email = "guangchuangyu@gmail.com", role = c("aut"), comment = c(ORCID = "0000-0002-6485-8781")),
+		person("Jiangshan", "Lai", role = c("ctb")),
+		person("Qiang", "Rao",   role = "ctb"),
+		person("Yu", "Umezawa",  role = "ctb")
+	   )
 Maintainer: Weiping Mei <meiweipingg@163.com>
-Description: Plot, draw regression line and confidence interval, and show regression equation, R-square and P-value,  as simple as possible, by using different models ("line2P", "line3P", "log2P", "exp2P", "exp3P", "power2P", "power3P") built in the 'trendline()' function.
+Description:  Plot, draw regression line and confidence interval, and show regression equation, R-square and P-value,  as simple as possible, by using different models ("line2P", "line3P", "log2P", "exp2P", "exp3P", "power2P", "power3P") built in the 'trendline()' function.
 Depends: R (>= 2.1.0)
 Imports:
     graphics,
     scales,
     stats,
     investr
+BugReports: https://github.com/PhDMeiwp/basicTrendline/issues
 License: GPL-3
 URL: https://github.com/PhDMeiwp/basicTrendline
 LazyData: true

@@ -62,7 +62,7 @@
 #' # [case 4]  lines of confidenc interval only (i.e. not fill)
 #' trendline(x3, y3, model="log2P", CI.fill = FALSE, CI.color = "black", CI.lty = 2)
 #' # [case 5]  trendliine only (i.e. without confidence interval)
-#' trendline(x4, y4, model="exp3P", CI.color = NA)
+#' trendline(x4, y4, model="exp3P", ePos="bottom", CI.color = NA)
 #'
 #' @author Weiping Mei, Guangchuang Yu
 #' @seealso  \code{\link{trendline}}, \code{\link{SSexp3P}}, \code{\link{SSpower3P}}, \code{\link[stats]{nls}}, \code{\link[stats]{selfStart}}, \code{\link[investr]{plotFit}}

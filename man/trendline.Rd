@@ -65,7 +65,7 @@ The linear models (line2P, line3P, log2P) in this package are estimated by \code
 }
 \note{
 Confidence intervals for nonlinear regression (i.e., objects of class
-\code{nls}) are based on the linear approximation described in Bates & Watts
+\code{nls}) are based on the linear approximation described in Bates & Watts 
 (2007).
 }
 \examples{
@@ -89,7 +89,7 @@ trendline(x2, y2, model="line3P", summary=FALSE,ePos="topright", linecolor="red"
 # [case 4]  lines of confidenc interval only (i.e. not fill)
 trendline(x3, y3, model="log2P", CI.fill = FALSE, CI.color = "black", CI.lty = 2)
 # [case 5]  trendliine only (i.e. without confidence interval)
-trendline(x4, y4, model="exp3P", CI.color = NA)
+trendline(x4, y4, model="exp3P", ePos="bottom", CI.color = NA)
 
 }
 \references{
