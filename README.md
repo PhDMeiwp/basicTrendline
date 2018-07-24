@@ -218,7 +218,7 @@ AIC or BIC, indicate the Akaike's Information Criterion or Bayesian Information 
 
 **[case 5] trendliine only (i.e. without confidence interval)**
 
-		trendline(x4, y4, model="exp3P", CI.color = NA)
+		trendline(x4, y4, model="exp3P", ePos="bottom", CI.color = NA)
 	
 <img src="docs/images/case5.png" width="490"/>
 
