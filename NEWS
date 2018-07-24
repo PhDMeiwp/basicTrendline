@@ -1,3 +1,11 @@
+Changes in version 2.0.1
+------------------------------------------------------------------------------
+Date: 2018-07-24
+* add several arguments to `trendline()` function
+* enable to draw confidence interval for regression models
+* enable to choose which parameter (equation, R-square and p-value) to show
+
+
 Changes in version 1.2.0
 ------------------------------------------------------------------------------
 Date: 2018-07-13

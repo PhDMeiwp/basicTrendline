@@ -26,6 +26,8 @@ p, indicates the p-value of each regression model.
 N, indicates the sample size.
 
 AIC or BIC, indicate the Akaike's Information Criterion or Bayesian Information Criterion for fitted model. Click \code{\link[stats]{AIC}} for details. The smaller the AIC or BIC, the better the model.
+
+RSS, indicate the value of "Residual Sum of Squares".
 }
 \description{
 Summarizing the results of each regression model which built in the 'trendline()' function. The function includes the following models in the latest version:

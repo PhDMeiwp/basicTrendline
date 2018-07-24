@@ -5,21 +5,28 @@
 \title{Add Trendline and Show Equation to Plot}
 \usage{
 trendline(x, y, model = "line2P", Pvalue.corrected = TRUE,
-  linecolor = "red", lty = 1, lwd = 1, summary = TRUE,
-  ePos = "topleft", eDigit = 5, eSize = 1, plot = TRUE, ...)
+  linecolor = "blue", lty = 1, lwd = 1, show.equation = TRUE,
+  show.Rpvalue = TRUE, summary = TRUE, ePos = "topleft", eDigit = 5,
+  eSize = 1, CI.fill = TRUE, CI.level = 0.95, CI.color = "grey",
+  CI.alpha = 1, CI.lty = 1, CI.lwd = 1, las = 1, xlab = NULL,
+  ylab = NULL, ...)
 }
 \arguments{
 \item{x, y}{the x and y arguments provide the x and y coordinates for the plot. Any reasonable way of defining the coordinates is acceptable.}
 
 \item{model}{select which model to fit. Default is "line2P". The "model" should be one of c("line2P", "line3P", "log2P", "exp2P", "exp3P", "power2P", "power3P"), their formulas are as follows:\cr "line2P": y=a*x+b \cr "line3P": y=a*x^2+b*x+c \cr "log2P": y=a*ln(x)+b \cr "exp2P": y=a*exp(b*x) \cr "exp3P": y=a*exp(b*x)+c \cr "power2P": y=a*x^b \cr "power3P": y=a*x^b+c}
 
-\item{Pvalue.corrected}{if P-value corrected or not, the vlaue is one of c("TRUE", "FALSE").}
+\item{Pvalue.corrected}{if P-value corrected or not, the value is one of c("TRUE", "FALSE").}
 
 \item{linecolor}{color of regression line.}
 
 \item{lty}{line type. lty can be specified using either text c("blank","solid","dashed","dotted","dotdash","longdash","twodash") or number c(0, 1, 2, 3, 4, 5, 6). Note that lty = "solid" is identical to lty=1.}
 
 \item{lwd}{line width. Default is 1.}
+
+\item{show.equation}{whether to show the regression equation, the value is one of c("TRUE", "FALSE").}
+
+\item{show.Rpvalue}{whether to show the R-square and P-value, the value is one of c("TRUE", "FALSE").}
 
 \item{summary}{summarizing the model fits. Default is TRUE.}
 
@@ -29,51 +36,68 @@ trendline(x, y, model = "line2P", Pvalue.corrected = TRUE,
 
 \item{eSize}{font size in percentage of equation. Default is 1.}
 
-\item{plot}{draw a scatter plot automatically, the vlaue is one of c("TRUE", "FALSE").}
+\item{CI.fill}{fill the confidance interval? (TRUE by default, see 'CI.level' to control)}
 
-\item{...}{additional parameters to \code{\link[graphics]{plot}},such as type, main, sub, xlab, ylab, col.}
+\item{CI.level}{level of confidence interval to use (0.95 by default)}
+
+\item{CI.color}{line or fill color of confidence interval.}
+
+\item{CI.alpha}{alpha value of fill color of confidence interval.}
+
+\item{CI.lty}{line type of confidence interval.}
+
+\item{CI.lwd}{line width of confidence interval.}
+
+\item{las}{style of axis labels. (0=parallel, 1=all horizontal, 2=all perpendicular to axis, 3=all vertical)}
+
+\item{xlab, ylab}{labels of x- and y-axis.}
+
+\item{...}{additional parameters to \code{\link[graphics]{plot}}, such as type, main, sub, pch, col.}
 }
 \description{
-Plot and show both regression line and equation as simple as possible,
+Plot, draw regression line and confidence interval, and show regression equation, R-square and P-value,  as simple as possible,
 by using different models built in the 'trendline()' function. The function includes the following models in the latest version:
 "line2P" (formula as: y=a*x+b), "line3P" (y=a*x^2+b*x+c), "log2P" (y=a*ln(x)+b), "exp2P" (y=a*exp(b*x)),"exp3P" (y=a*exp(b*x)+c), "power2P" (y=a*x^b), and "power3P" (y=a*x^b+c).
-Besides, the summarized results of each fitted model are also output by default.
+Besides, the summarized result of each fitted model is also output by default.
 }
 \details{
-The linear models (line2P, line3P, log2P) in this package are estimated by \code{\link[stats]{lm}} function, \cr while the nonlinear models (exp2P, exp3P, power2P, power3P) are estimated by \code{\link[stats]{nls}} function (i.e., least-squares method).\cr\cr The argument 'Pvalue.corrected' is workful for non-linear regression only.\cr\cr If "Pvalue.corrected = TRUE", the P-vlaue is calculated by using "Residual Sum of Squares" and "Corrected Total Sum of Squares (i.e. sum((y-mean(y))^2))".\cr If "Pvalue.corrected = TRUE", the P-vlaue is calculated by using "Residual Sum of Squares" and "Uncorrected Total Sum of Squares (i.e. sum(y^2))".
+The linear models (line2P, line3P, log2P) in this package are estimated by \code{\link[stats]{lm}} function, \cr while the nonlinear models (exp2P, exp3P, power2P, power3P) are estimated by \code{\link[stats]{nls}} function (i.e., least-squares method).\cr\cr The argument 'Pvalue.corrected' is workful for non-linear regression only.\cr\cr If "Pvalue.corrected = TRUE", the P-value is calculated by using "Residual Sum of Squares" and "Corrected Total Sum of Squares (i.e. sum((y-mean(y))^2))".\cr If "Pvalue.corrected = TRUE", the P-value is calculated by using "Residual Sum of Squares" and "Uncorrected Total Sum of Squares (i.e. sum(y^2))".
+}
+\note{
+Confidence intervals for nonlinear regression (i.e., objects of class
+\code{nls}) are based on the linear approximation described in Bates & Watts
+(2007).
 }
 \examples{
 library(basicTrendline)
-x1<-1:5
-x2<- -2:2
-x3<- c(101,105,140,200,660)
-x4<- -5:-1
-x5<- c(1,30,90,180,360)
+x1 <- 1:5
+x2 <- -2:2
+x3 <- c(101,105,140,200,660)
+x4 <- -5:-1
 
-y1<-c(2,14,18,19,20)        # increasing convex trend
-y2<- c(-2,-14,-18,-19,-20)  # decreasing concave trend
-y3<-c(2,4,16,38,89)         # increasing concave trend
-y4<-c(-2,-4,-16,-38,-89)    # decreasing convex trend
-y5<- c(600002,600014,600018,600019,600020) # high y values with low range.
+y1 <- c(2,14,18,19,20)       # increasing convex  trend
+y2 <- c(-2,-14,-18,-19,-20)  # decreasing concave trend
+y3 <- c(2,4,16,38,89)        # increasing concave trend
+y4 <- c(-2,-4,-16,-38,-89)   # decreasing convex  trend
 
-trendline(x1,y1,model="line2P",summary=TRUE,eDigit=10)
-trendline(x2,y2,model="line3P",summary=FALSE,ePos="topright")
-trendline(x3,y3,model="log2P",linecolor="blue")
-trendline(x4,y4,model="exp3P",eSize=0.7) #change the font size of equation.
-trendline(x5,y5,model="power3P")
-
-## Not run
-plot(x1,y1,main="Different regression lines in one plot")
-library(basicTrendline)
-trendline(x1,y1,model="line2P",plot=FALSE,ePos="none",linecolor="red")
-trendline(x1,y1,model="log2P",plot=FALSE,ePos="none",linecolor="blue",lty=2)
-trendline(x1,y1,model="exp3P",plot=FALSE,ePos="none",linecolor="black",lty=3)
-legend("bottomright",c("line2P","log2P","exp3P"), lty=c(1,2,3),col=c("red","blue","black"))
-## END (Not run)
+# [case 1] default (plot, regression line, confidence interval)
+trendline(x1, y1, model="line2P", summary=TRUE, eDigit=10)
+# [case 2]  show equation only
+trendline(x1, y1, model="line2P", show.equation = TRUE, show.Rpvalue = FALSE)
+# [case 3]  'eSize' is to change the font size of equation.
+trendline(x2, y2, model="line3P", summary=FALSE,ePos="topright", linecolor="red", eSize=0.7)
+# [case 4]  lines of confidenc interval only (i.e. not fill)
+trendline(x3, y3, model="log2P", CI.fill = FALSE, CI.color = "black", CI.lty = 2)
+# [case 5]  trendliine only (i.e. without confidence interval)
+trendline(x4, y4, model="exp3P", CI.color = NA)
 
 }
+\references{
+Bates, D. M., and Watts, D. G. (2007)
+\emph{Nonlinear Regression Analysis and its Applications}. Wiley.
+}
 \seealso{
-\code{\link{trendline}}, \code{\link{SSexp3P}}, \code{\link{SSpower3P}}, \code{\link[stats]{nls}}, \code{\link[stats]{selfStart}}
+\code{\link{trendline}}, \code{\link{SSexp3P}}, \code{\link{SSpower3P}}, \code{\link[stats]{nls}}, \code{\link[stats]{selfStart}}, \code{\link[investr]{plotFit}}
 }
 \author{
 Weiping Mei, Guangchuang Yu

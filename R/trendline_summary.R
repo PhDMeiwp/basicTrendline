@@ -16,6 +16,7 @@
 #' @return p, indicates the p-value of each regression model.
 #' @return N, indicates the sample size.
 #' @return AIC or BIC, indicate the Akaike's Information Criterion or Bayesian Information Criterion for fitted model. Click \code{\link[stats]{AIC}} for details. The smaller the AIC or BIC, the better the model.
+#' @return RSS, indicate the value of "Residual Sum of Squares".
 #' @examples
 #' library(basicTrendline)
 #' x1<-1:5
@@ -59,6 +60,7 @@ trendline_summary <- function(x,y,model="line2P", Pvalue.corrected=TRUE, summary
 
     fit<- lm(y~x)
     sum.line2P <- summary(fit)
+    ss.res<-sum((residuals(fit))^2) # Residual Sum of Squares, DF= n-k
 
     if (summary==TRUE){
       print(sum.line2P,digits=eDigit)
@@ -96,6 +98,7 @@ trendline_summary <- function(x,y,model="line2P", Pvalue.corrected=TRUE, summary
     fit<-lm(y~I(x^2)+x)
 
     sum.line3P <- summary(fit)
+    ss.res<-sum((residuals(fit))^2) # Residual Sum of Squares, DF= n-k
 
     if (summary==TRUE){
       print(sum.line3P,digits=eDigit)
@@ -141,11 +144,13 @@ trendline_summary <- function(x,y,model="line2P", Pvalue.corrected=TRUE, summary
       if (summary==TRUE){
         fit0<-lm(y~log(x))
         sum.log0<-summary(fit0)
+        ss.res<-sum((residuals(fit0))^2) # Residual Sum of Squares, DF= n-k
         print(sum.log0, digits = eDigit)
       }else{}
 
       fit<-lm(yadj~log(x))  # adjusted y used
       sum.log<-summary(fit)
+      ss.res<-sum((residuals(fit))^2) # Residual Sum of Squares, DF= n-k
       a<-sum.log$coefficients[2,1]  # slope
       b<-sum.log$coefficients[1,1]  # intercept
       b=b+min(y)  #re-adjust
@@ -571,11 +576,13 @@ trendline_summary <- function(x,y,model="line2P", Pvalue.corrected=TRUE, summary
   pval=as.numeric(pval)
   AIC = as.numeric(format(AIC(fit), digits = eDigit))
   BIC = as.numeric(format(BIC(fit), digits = eDigit))
+  ss.res=as.numeric(format(ss.res, digits = eDigit))
 
   if (summary==TRUE){
-    ##print N, AIC and BIC
-    cat("N:", nrow, ", AIC:", AIC, ", BIC: ", BIC, "\n")
-  }else{}
+    ##print N, AIC, BIC and RSS
+    cat("\nN:", nrow, ", AIC:", AIC, ", BIC: ", BIC, "\nResidual Sum of Squares: ", ss.res,"\n")
+      }else{}
 
-  invisible(list(formula=formula, parameter=param.out, R.squared=r2, adj.R.squared=adjr2, p.value = pval, N = nrow, AIC=AIC, BIC=BIC))
+  invisible(list(formula=formula, parameter=param.out, R.squared=r2, adj.R.squared=adjr2, p.value = pval,
+                      N = nrow, AIC=AIC, BIC=BIC, RSS=ss.res))
   }
