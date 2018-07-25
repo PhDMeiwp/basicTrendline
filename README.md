@@ -128,7 +128,7 @@ Besides, the summarized results of each fitted model are also output by default.
 			linecolor = "blue", lty = 1, lwd = 1, 
 			show.equation = TRUE, show.Rpvalue = TRUE, 
 			summary = TRUE, 
-			ePos = "topleft", eDigit = 5, eSize = 1, 
+			ePos.x = min(x), ePos.y = max(y), eDigit = 5, eSize = 1, text.col = "black",
 			CI.fill = TRUE, CI.level = 0.95, CI.color = "grey",	CI.alpha = 1, CI.lty = 1, CI.lwd = 1, 
 			las = 1, xlab = NULL, ylab = NULL, ...)
 
@@ -170,6 +170,9 @@ summarizing the model fits. Default is TRUE.
 
 <br>**ePos.x, ePos.y**<br>	
 equation position. Default are: ePos.x = min(x), ePos.y = max(y). If no need to show equation, set ePos.x = NA.
+
+<br>**text.col**<br>
+the color used for the legend text.
 
 <br>**eDigit**	<br>
 the numbers of digits for equation parameters. Default is 5.
