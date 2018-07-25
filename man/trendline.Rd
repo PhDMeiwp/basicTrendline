@@ -6,7 +6,8 @@
 \usage{
 trendline(x, y, model = "line2P", Pvalue.corrected = TRUE,
   linecolor = "blue", lty = 1, lwd = 1, show.equation = TRUE,
-  show.Rpvalue = TRUE, summary = TRUE, ePos = "topleft", eDigit = 5,
+  show.Rpvalue = TRUE, Rname = 0, Pname = 0, summary = TRUE,
+  ePos.x = min(x), ePos.y = max(y), text.col = "black", eDigit = 5,
   eSize = 1, CI.fill = TRUE, CI.level = 0.95, CI.color = "grey",
   CI.alpha = 1, CI.lty = 1, CI.lwd = 1, las = 1, xlab = NULL,
   ylab = NULL, ...)
@@ -28,9 +29,15 @@ trendline(x, y, model = "line2P", Pvalue.corrected = TRUE,
 
 \item{show.Rpvalue}{whether to show the R-square and P-value, the value is one of c("TRUE", "FALSE").}
 
+\item{Rname}{to specify the character of R-square, the value is one of c(o, 1), corresponding to c(R^2, r^2).}
+
+\item{Pname}{to specify the character of P-value, the value is one of c(o, 1), corresponding to c(P, p).}
+
 \item{summary}{summarizing the model fits. Default is TRUE.}
 
-\item{ePos}{equation position, such as one of c("none","bottomright","bottom","bottomleft","left","topleft","top","topright","right","center").}
+\item{ePos.x, ePos.y}{equation position. Default are: ePos.x = min(x), ePos.y = max(y). If no need to show equation, set ePos.x = NA.}
+
+\item{text.col}{the color used for the legend text.}
 
 \item{eDigit}{the numbers of digits for equation parameters. Default is 5.}
 
@@ -81,14 +88,19 @@ y4 <- c(-2,-4,-16,-38,-89)   # decreasing convex  trend
 
 # [case 1] default (plot, regression line, confidence interval)
 trendline(x1, y1, model="line2P", summary=TRUE, eDigit=10)
-# [case 2]  show equation only
-trendline(x1, y1, model="line2P", show.equation = TRUE, show.Rpvalue = FALSE)
-# [case 3]  'eSize' is to change the font size of equation.
-trendline(x2, y2, model="line3P", summary=FALSE,ePos="topright", linecolor="red", eSize=0.7)
-# [case 4]  lines of confidenc interval only (i.e. not fill)
+# [case 2]  'eSize' is to change the font size of equation.
+trendline(x2, y2, model="line3P", summary=FALSE, linecolor="red", eSize=1.4)
+# [case 3]  lines of confidenc interval only (i.e. not fill)
 trendline(x3, y3, model="log2P", CI.fill = FALSE, CI.color = "black", CI.lty = 2)
-# [case 5]  trendliine only (i.e. without confidence interval)
-trendline(x4, y4, model="exp3P", ePos="bottom", CI.color = NA)
+# [case 4]  trendliine only (i.e. without confidence interval)
+trendline(x4, y4, model="exp3P", ePos.x= -2, ePos.y = -50, CI.color = NA)
+
+# [case 5]  show regression equation only
+trendline(x1, y1, model="line2P", show.equation = TRUE, show.Rpvalue = FALSE)
+# [case 6]  specify the name of parameters (R^2 or r^2; P or p) in regression equation
+trendline(x1, y1, model="line2P", Rname=1, Pname = 1)
+# [case 7]  don't show equation
+trendline(x1, y1, model="line2P", ePos.x = NA)
 
 }
 \references{

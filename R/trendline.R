@@ -13,6 +13,8 @@
 #' @param lwd line width. Default is 1.
 #' @param show.equation whether to show the regression equation, the value is one of c("TRUE", "FALSE").
 #' @param show.Rpvalue whether to show the R-square and P-value, the value is one of c("TRUE", "FALSE").
+#' @param Rname to specify the character of R-square, the value is one of c(o, 1), corresponding to c(R^2, r^2).
+#' @param Pname  to specify the character of P-value, the value is one of c(o, 1), corresponding to c(P, p).
 #' @param CI.fill fill the confidance interval? (TRUE by default, see 'CI.level' to control)
 #' @param CI.level level of confidence interval to use (0.95 by default)
 #' @param CI.alpha alpha value of fill color of confidence interval.
@@ -20,7 +22,8 @@
 #' @param CI.lty line type of confidence interval.
 #' @param CI.lwd line width of confidence interval.
 #' @param summary summarizing the model fits. Default is TRUE.
-#' @param ePos equation position, such as one of c("none","bottomright","bottom","bottomleft","left","topleft","top","topright","right","center").
+#' @param text.col the color used for the legend text.
+#' @param ePos.x,ePos.y equation position. Default are: ePos.x = min(x), ePos.y = max(y). If no need to show equation, set ePos.x = NA.
 #' @param eDigit the numbers of digits for equation parameters. Default is 5.
 #' @param eSize  font size in percentage of equation. Default is 1.
 #' @param xlab,ylab labels of x- and y-axis.
@@ -39,9 +42,9 @@
 #' @references
 #' Bates, D. M., and Watts, D. G. (2007)
 #' \emph{Nonlinear Regression Analysis and its Applications}. Wiley.
-#' 
+#'
 #' Greenwell B. M., and Schubert-Kabban, C. M. (2014)
-#' \emph{investr: An R Package for Inverse Estimation}. The R Journal, 6(1), 90-100. 
+#' \emph{investr: An R Package for Inverse Estimation}. The R Journal, 6(1), 90-100.
 #' @return NULL
 #' @examples
 #' library(basicTrendline)
@@ -57,14 +60,19 @@
 #'
 #' # [case 1] default (plot, regression line, confidence interval)
 #' trendline(x1, y1, model="line2P", summary=TRUE, eDigit=10)
-#' # [case 2]  show equation only
-#' trendline(x1, y1, model="line2P", show.equation = TRUE, show.Rpvalue = FALSE)
-#' # [case 3]  'eSize' is to change the font size of equation.
-#' trendline(x2, y2, model="line3P", summary=FALSE,ePos="topright", linecolor="red", eSize=0.7)
-#' # [case 4]  lines of confidenc interval only (i.e. not fill)
+#' # [case 2]  'eSize' is to change the font size of equation.
+#' trendline(x2, y2, model="line3P", summary=FALSE, linecolor="red", eSize=1.4)
+#' # [case 3]  lines of confidenc interval only (i.e. not fill)
 #' trendline(x3, y3, model="log2P", CI.fill = FALSE, CI.color = "black", CI.lty = 2)
-#' # [case 5]  trendliine only (i.e. without confidence interval)
-#' trendline(x4, y4, model="exp3P", ePos="bottom", CI.color = NA)
+#' # [case 4]  trendliine only (i.e. without confidence interval)
+#' trendline(x4, y4, model="exp3P", ePos.x= -2, ePos.y = -50, CI.color = NA)
+#'
+#' # [case 5]  show regression equation only
+#' trendline(x1, y1, model="line2P", show.equation = TRUE, show.Rpvalue = FALSE)
+#' # [case 6]  specify the name of parameters (R^2 or r^2; P or p) in regression equation
+#' trendline(x1, y1, model="line2P", Rname=1, Pname = 1)
+#' # [case 7]  don't show equation
+#' trendline(x1, y1, model="line2P", ePos.x = NA)
 #'
 #' @author Weiping Mei, Guangchuang Yu
 #' @seealso  \code{\link{trendline}}, \code{\link{SSexp3P}}, \code{\link{SSpower3P}}, \code{\link[stats]{nls}}, \code{\link[stats]{selfStart}}, \code{\link[investr]{plotFit}}
@@ -72,21 +80,24 @@
 trendline <- function(x, y, model="line2P", Pvalue.corrected = TRUE,
                       linecolor = "blue", lty = 1, lwd = 1,
                       show.equation = TRUE, show.Rpvalue = TRUE,
+                      Rname = 0, Pname = 0,
                       summary = TRUE,
-                      ePos = "topleft", eDigit = 5, eSize = 1,
+                      ePos.x = min(x), ePos.y = max(y), text.col="black", eDigit = 5, eSize = 1,
                       CI.fill = TRUE, CI.level = 0.95, CI.color = "grey", CI.alpha = 1, CI.lty = 1, CI.lwd = 1,
                       las = 1, xlab=NULL, ylab=NULL, ...)
 {
   model=model
-  if(is.null(xlab)) xlab = deparse(substitute(x)) else xlab = xlab
-  if(is.null(ylab)) ylab = deparse(substitute(y)) else ylab = ylab
+  if(is.null(xlab))  xlab = deparse(substitute(x)) else xlab = xlab
+  if(is.null(ylab))  ylab = deparse(substitute(y)) else ylab = ylab
+  if(Rname==0)            Rname = "R"         else Rname = "r"
+  if(Pname==0)            Pname = "P"         else Pname = "p"
 
   OK <- complete.cases(x, y)
   x <- x[OK]
   y <- y[OK]
   z<-data.frame(x,y)
 
-  return <- trendline_summary(x=x, y=y, model=model, Pvalue.corrected=Pvalue.corrected,summary = FALSE,eDigit = eDigit)
+  return <- trendline_summary(x=x, y=y, model=model, Pvalue.corrected=Pvalue.corrected, summary = FALSE, eDigit = eDigit)
   a = return$parameter$a
   b = return$parameter$b
   if (is.null(return$parameter$c)==FALSE){
@@ -109,7 +120,7 @@ if (model== c("line2P"))
   fitting <- lm(y~x)
 
   if (summary==TRUE){
-    trendline_summary(x,y,"line2P", eDigit=eDigit)
+    trendline_summary(x,y,"line2P", Pvalue.corrected=Pvalue.corrected, eDigit=eDigit)
   }else{}
 
   aa = abs(a)
@@ -118,7 +129,6 @@ if (model== c("line2P"))
   bb = format(bb, digits = eDigit)
 
   param <- vector('expression',2)
-
   if (aa==1){aa=c("")}
 
   if (a>0)
@@ -134,7 +144,7 @@ if (model== c("line2P"))
     }
   }
 
-  param[2] <- substitute(expression(italic(R)^2 == r2*","~~italic(p)~~pval))[2]
+  param[2] <- substitute(expression(italic(Rname)^2 == r2*","~~italic(Pname)~~pval))[2]
 
  }
 
@@ -145,7 +155,7 @@ if (model== c("line2P"))
     fitting <- lm(y~I(x^2)+x)
 
     if (summary==TRUE){
-    trendline_summary(x,y,"line3P", eDigit=eDigit)
+    trendline_summary(x,y,"line3P", Pvalue.corrected=Pvalue.corrected, eDigit=eDigit)
     }else{}
 
 
@@ -192,7 +202,7 @@ if (model== c("line2P"))
 
   }
 
-    param[2] <- substitute(expression(italic(R)^2 == r2*","~~italic(p)~~pval*"            "))[2]
+    param[2] <- substitute(expression(italic(Rname)^2 == r2*","~~italic(Pname)~~pval*"            "))[2]
 
   }
 
@@ -202,7 +212,7 @@ if (model== c("log2P"))
   Pvalue.corrected=TRUE
   formula = 'y = a*ln(x) + b'
   if (summary==TRUE){
-    trendline_summary(x,y,"log2P", eDigit=eDigit)
+    trendline_summary(x,y,"log2P", Pvalue.corrected=Pvalue.corrected, eDigit=eDigit)
   }else{}
 
   if (min(x)>0)
@@ -237,7 +247,7 @@ if (model== c("log2P"))
     }
   }
 
-    param[2] <- substitute(expression(italic(R)^2 == r2*","~~italic(p)~~pval))[2]
+    param[2] <- substitute(expression(italic(Rname)^2 == r2*","~~italic(Pname)~~pval))[2]
 
  }else{
     stop("
@@ -283,7 +293,7 @@ if (model== c("log2P"))
       }
     }
 
-    param[2] <- substitute(expression(italic(R)^2 == r2*","~~italic(p)~~pval))[2]
+    param[2] <- substitute(expression(italic(Rname)^2 == r2*","~~italic(Pname)~~pval))[2]
 
   }
 
@@ -344,7 +354,7 @@ if (model== c("log2P"))
      }
    }
 }
-    param[2] <- substitute(expression(italic(R)^2 == r2*","~~italic(p)~~pval))[2]
+    param[2] <- substitute(expression(italic(Rname)^2 == r2*","~~italic(Pname)~~pval))[2]
   }
 
 
@@ -373,7 +383,7 @@ if (model== "power2P")
       }else{
         param[1] <- substitute(expression(italic("y") == -aa~italic("x")^b))[2]
       }
-      param[2] <- substitute(expression(italic(R)^2 == r2*","~~italic(p)~~pval))[2]
+      param[2] <- substitute(expression(italic(Rname)^2 == r2*","~~italic(Pname)~~pval))[2]
 
     }else{
       stop("
@@ -418,7 +428,7 @@ if (model== "power3P")
       param[1] <- substitute(expression(italic("y") == -aa~italic("x")^b ~ - cc))[2]
     }
   }
-      param[2] <- substitute(expression(italic(R)^2 == r2*","~~italic(p)~~pval))[2]
+      param[2] <- substitute(expression(italic(Rname)^2 == r2*","~~italic(Pname)~~pval))[2]
 
     }else{
     stop("
@@ -444,10 +454,13 @@ if (model== "power3P")
   }
 
 ### show legend
-  if (ePos==c("none")){}else{
   if (show.equation == TRUE) param[1] = param[1]  else param[1]=NULL
   if (show.Rpvalue  == TRUE) param[2] = param[2]  else param[2]=NULL
 
-  legend(ePos, inset=0,legend = param, cex = eSize, bty = 'n')
+  if(!is.null(ePos.x & ePos.y)){
+    ePos.x = ePos.x
+    ePos.y = ePos.y
+  legend(x = ePos.x, y = ePos.y, text.col = text.col, legend = param, cex = eSize, bty = 'n')
   }
+
 }

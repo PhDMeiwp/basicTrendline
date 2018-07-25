@@ -1,8 +1,7 @@
 Package: basicTrendline
-Version: 2.0.1
-Date: 2018-07-24
+Version: 2.0.2
+Date: 2018-07-25
 Title: Add Trendline of Basic Regression Models to Plot
-Author: Weiping Mei, Guangchuang Yu, Jiangshan Lai, Qiang Rao and Yu Umezawa
 Authors@R: c(
 		person("Weiping", "Mei",     email = "meiweipingg@163.com", role = c("aut", "cre", "cph"), comment = c(ORCID = "0000-0001-6400-9862")),
 		person("Guangchuang", "Yu",     email = "guangchuangyu@gmail.com", role = c("aut"), comment = c(ORCID = "0000-0002-6485-8781")),

@@ -77,7 +77,7 @@ Or the development version from github:
 	
 **[case 3]  'eSize' is used to change the font size of equation** 
 
-		trendline(x2, y2, model="line3P", summary=FALSE,ePos="topright", linecolor="red", eSize=0.7)
+		trendline(x2, y2, model="line3P", summary=FALSE, linecolor="red", eSize=0.7)
 
 <img src="docs/images/case3.png" width="490"/>
 
@@ -91,7 +91,7 @@ Or the development version from github:
 
 **[case 5] trendliine only (i.e. without confidence interval)**
 
-		trendline(x4, y4, model="exp3P", ePos="bottom", CI.color = NA)
+		trendline(x4, y4, model="exp3P", ePos.x = -2, ePos.y = -50, CI.color = NA)
 	
 <img src="docs/images/case5.png" width="490"/>
 
@@ -165,8 +165,8 @@ whether to show the R-square and P-value, the value is one of c("TRUE", "FALSE")
 <br>**summary**	<br>
 summarizing the model fits. Default is TRUE.
 
-<br>**ePos**<br>	
-equation position, such as one of c("none","bottomright","bottom","bottomleft","left","topleft","top","topright","right","center").
+<br>**ePos.x, ePos.y**<br>	
+equation position. Default are: ePos.x = min(x), ePos.y = max(y). If no need to show equation, set ePos.x = NA.
 
 <br>**eDigit**	<br>
 the numbers of digits for equation parameters. Default is 5.
@@ -233,9 +233,10 @@ To see examples on how to use "basicTrendline" in R software, you can run the fo
     ?trendline()
 
 
-## Contributions
+## Acknowledgements
 
-R codes contributed by
+We would like to express my special thanks to **Uwe Ligges, Swetlana Herbrandt, and CRAN team** for their very valuable comments to the 'basicTrendline' package.
+Our thanks also go to those who contributed R codes by:
 
 - adding conficende interval for both lm and nls objects: https://github.com/bgreenwell/investr
 - adding-regression-line-equation-and-r2-on-graph-1: http://blog.sciencenet.cn/blog-267448-1021594.html
@@ -254,4 +255,4 @@ R codes contributed by
 
 The **PDF file** of this R package is available at https://cran.r-project.org/web/packages/basicTrendline/index.html 
 
->> 点击进入 [basicTrendline函数包中文介绍入口](http://meiweiping.cn/%E7%94%A8%E4%BA%8E%E5%B8%B8%E8%A7%84%E7%BA%BF%E6%80%A7%E9%9D%9E%E7%BA%BF%E6%80%A7%E6%8B%9F%E5%90%88%E7%9A%84R%E5%87%BD%E6%95%B0%E5%8C%85%EF%BC%88basicTrendline%EF%BC%89%E4%BB%8B%E7%BB%8D/)
+> 点击进入 [basicTrendline函数包中文介绍入口](http://meiweiping.cn/%E7%94%A8%E4%BA%8E%E5%B8%B8%E8%A7%84%E7%BA%BF%E6%80%A7%E9%9D%9E%E7%BA%BF%E6%80%A7%E6%8B%9F%E5%90%88%E7%9A%84R%E5%87%BD%E6%95%B0%E5%8C%85%EF%BC%88basicTrendline%EF%BC%89%E4%BB%8B%E7%BB%8D/)
