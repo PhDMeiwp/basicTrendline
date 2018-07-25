@@ -30,11 +30,14 @@ Or the development version from github:
 	devtools::install_github("PhDMeiwp/basicTrendline@master", force = TRUE)
 
 
-## Changes in version 2.0.1	
+## Changes in version 2.0.2	
 
 - add several arguments to `trendline()` function
 - enable to draw confidence interval for regression models
 - enable to choose which parameter (equation, R-square and p-value) to show
+- enable to specify the character of R-square and P-vlaue (i.e. R^2 or r^2; P or p)
+- add 'ePos.x' and 'ePos.y' arguments to specify the x and y co-ordinates of equation's position
+- deleted the 'ePos' argument 
 
 ## Changes in version 1.2.0
 
