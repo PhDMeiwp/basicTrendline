@@ -30,14 +30,17 @@ Or the development version from github:
 	devtools::install_github("PhDMeiwp/basicTrendline@master", force = TRUE)
 
 
-## Changes in version 2.0.2	
+## Changes in version 2.0.3	
 
-- add several arguments to `trendline()` function
-- enable to draw confidence interval for regression models
-- enable to choose which parameter (equation, R-square and p-value) to show
-- enable to specify the character of R-square and P-vlaue (i.e. R^2 or r^2; P or p)
+- add several arguments to `trendline()` function, including show.equation, show.Rpvalue, Rname, Pname, xname, yname, yhat, CI.fill, CI.level, CI.alpha, CI.color, CI.lty, CI.lwd, ePos.x, ePos.y, las.
+- enable to draw confidence interval for regression models (arguments CI.fill, CI.level, etc.)
+- add 'show.equation' and show.Rpvale' arguments to enable to choose which parameter to show
+- add 'Rname' and 'Pname' arguments to specify the character of R-square and P-vlaue (i.e. R^2 or r^2; P or p)
+- add 'xname' and 'ynameto' arguments to specify the character of 'x' and 'y' in the equation
+- add 'yhat' argument to enable to add a hat symbol on the top of 'y' in the equation
 - add 'ePos.x' and 'ePos.y' arguments to specify the x and y co-ordinates of equation's position
 - deleted the 'ePos' argument 
+- add "Residual Sum of Squares" to the output of 'trendline_summary()' function
 
 ## Changes in version 1.2.0
 
@@ -54,49 +57,57 @@ Or the development version from github:
 # Examples
 	
 		library(basicTrendline)
-		x1 <- 1:5
-		x2 <- -2:2
-		x3 <- c(101,105,140,200,660)
-		x4 <- -5:-1
+		x <- c(1, 3, 6,  9,  13,   17)
+		y <- c(5, 8, 11, 13, 13.2, 13.5)
 
-		y1 <- c(2,14,18,19,20)       # increasing convex  trend
-		y2 <- c(-2,-14,-18,-19,-20)  # decreasing concave trend
-		y3 <- c(2,4,16,38,89)        # increasing concave trend
-		y4 <- c(-2,-4,-16,-38,-89)   # decreasing convex  trend
+# [case 1] default
+		trendline(x, y, model="line2P", ePos.x = "topleft", summary=TRUE, eDigit=5)
 
- **[case 1] default (plot, regression line, confidence interval)** 
+<img src="docs/images/case1.png" width="490"/>
 
-		library(basicTrendline)
-		trendline(x1, y1, model="line2P", summary=TRUE, eDigit=10)
-
- <img src="docs/images/case1.png" width="490"/>
-
-
-**[case 2] show equation only** 
-
-		trendline(x1, y1, model="line2P", show.equation = TRUE, show.Rpvalue = FALSE)
+# [case 2]  draw lines of confidenc interval only (set CI.fill = FALSE)
+		trendline(x, y, model="line3P", CI.fill = FALSE, CI.color = "black", CI.lty = 2, linecolor = "blue")
 
 <img src="docs/images/case2.png" width="490"/>
-	
-**[case 3]  'eSize' is used to change the font size of equation** 
 
-		trendline(x2, y2, model="line3P", summary=FALSE, linecolor="red", eSize=0.7)
+# [case 3]  draw trendliine only (set CI.color = NA)
+		trendline(x, y, model="log2P", ePos.x= "top", linecolor = "red", CI.color = NA)
 
 <img src="docs/images/case3.png" width="490"/>
 
-
-**[case 4] lines of confidenc interval only (i.e. not fill)**
-
-		trendline(x3, y3, model="log2P", CI.fill = FALSE, CI.color = "black", CI.lty = 2)
+# [case 4]  show regression equation only (set show.Rpvalue = FALSE)
+		trendline(x, y, model="exp2P", show.equation = TRUE, show.Rpvalue = FALSE)
 
 <img src="docs/images/case4.png" width="490"/>
 
+# [case 5]  specify the name of parameters in equation
+** see Arguments c('xname', 'yname', 'yhat', 'Rname', 'Pname') **
+		trendline(x, y, model="exp3P", xname="T", yname=paste(delta^15,"N"),
+				yhat=FALSE, Rname=1, Pname=0, ePos.x = "bottom")
 
-**[case 5] trendliine only (i.e. without confidence interval)**
-
-		trendline(x4, y4, model="exp3P", ePos.x = -2, ePos.y = -50, CI.color = NA)
-	
 <img src="docs/images/case5.png" width="490"/>
+
+# [case 6]  change the digits, font size, and color of equation.
+		trendline(x, y, model="power2P", eDigit = 3, eSize = 1.4, text.col = "blue")
+
+<img src="docs/images/case6.png" width="490"/>
+		
+# [case 7]  don't show equation (set ePos.x = NA)
+		trendline(x, y, model="power3P", ePos.x = NA)
+
+<img src="docs/images/case7.png" width="490"/>
+
+# [case 8]  set graphical parameters by par {graphics}
+		### NOT RUN
+		par(mgp=c(1.5,0.4,0), mar=c(3,3,1,1), tck=-0.01, cex.axis=0.9)
+
+		trendline(x, y)
+
+		dev.off()
+
+		### END (NOT RUN)
+	
+<img src="docs/images/case8.png" width="490"/>
 
 ---
 
@@ -127,8 +138,10 @@ Besides, the summarized results of each fitted model are also output by default.
      trendline(x, y, model = "line2P", Pvalue.corrected = TRUE,
 			linecolor = "blue", lty = 1, lwd = 1, 
 			show.equation = TRUE, show.Rpvalue = TRUE, 
+			Rname = 1, Pname = 0, xname = "x", yname = "y",
+			yhat = FALSE, 
 			summary = TRUE, 
-			ePos.x = min(x), ePos.y = max(y), eDigit = 5, eSize = 1, text.col = "black",
+			ePos.x = NULL, ePos.y = NULL, text.col = "black", eDigit = 5, eSize = 1, 
 			CI.fill = TRUE, CI.level = 0.95, CI.color = "grey",	CI.alpha = 1, CI.lty = 1, CI.lwd = 1, 
 			las = 1, xlab = NULL, ylab = NULL, ...)
 
@@ -165,11 +178,26 @@ whether to show the regression equation, the value is one of c("TRUE", "FALSE").
 <br>**show.Rpvalue**	<br>
 whether to show the R-square and P-value, the value is one of c("TRUE", "FALSE").
 
+<br>**Rname**	<br>	
+to specify the character of R-square, the value is one of c(0, 1), corresponding to c(r^2, R^2).
+
+<br>**Pname**	<br>	
+to specify the character of P-value, the value is one of c(0, 1), corresponding to c(p, P).
+
+<br>**xname**	<br>	
+to specify the character of "x" in equation, see Examples [case 5].
+
+<br>**yname**	<br>	
+to specify the character of "y" in equation, see Examples [case 5].
+
+<br>**yhat**	<br>	
+whether to add a hat symbol (^) on the top of "y" in equation. Default is FALSE.
+
 <br>**summary**	<br>
 summarizing the model fits. Default is TRUE.
 
 <br>**ePos.x, ePos.y**<br>	
-equation position. Default are: ePos.x = min(x), ePos.y = max(y). If no need to show equation, set ePos.x = NA.
+equation position. Default as ePos.x = "topleft". If no need to show equation, set ePos.x = NA. It's same as those in legend.
 
 <br>**text.col**<br>
 the color used for the legend text.
@@ -222,6 +250,8 @@ Confidence intervals for nonlinear regression (i.e., objects of class nls) are b
 
 Bates, D. M., and Watts, D. G. (2007) *Nonlinear Regression Analysis and its Applications*. Wiley.
 
+Greenwell B. M., and Schubert-Kabban, C. M. (2014) *investr: An R Package for Inverse Estimation*. The R Journal, 6(1), 90-100.
+
 ## Value
 
 R<sup>2</sup>, indicates the R-Squared value of each regression model.
@@ -230,6 +260,7 @@ p, indicates the p-value of each regression model.
 
 AIC or BIC, indicate the Akaike's Information Criterion or Bayesian Information Criterion for fitted model. Click AIC for details. The smaller the AIC or BIC, the better the model.
 
+RSS, indicates the "Residual Sum of Squares” of regression model.
 
 ---
 

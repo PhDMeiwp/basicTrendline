@@ -1,7 +1,7 @@
 Package: basicTrendline
-Version: 2.0.2
-Date: 2018-07-25
-Title: Add Trendline of Basic Regression Models to Plot
+Version: 2.0.3
+Date: 2018-07-26
+Title: Add Trendline and Confidence Interval of Basic Regression Models to Plot
 Authors@R: c(
 		person("Weiping", "Mei",     email = "meiweipingg@163.com", role = c("aut", "cre", "cph"), comment = c(ORCID = "0000-0001-6400-9862")),
 		person("Guangchuang", "Yu",     email = "guangchuangyu@gmail.com", role = c("aut"), comment = c(ORCID = "0000-0002-6485-8781")),
@@ -14,8 +14,8 @@ Description:  Plot, draw regression line and confidence interval, and show regre
 Depends: R (>= 2.1.0)
 Imports:
     graphics,
-    scales,
     stats,
+    scales,
     investr
 BugReports: https://github.com/PhDMeiwp/basicTrendline/issues
 License: GPL-3

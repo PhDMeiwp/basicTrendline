@@ -13,8 +13,11 @@
 #' @param lwd line width. Default is 1.
 #' @param show.equation whether to show the regression equation, the value is one of c("TRUE", "FALSE").
 #' @param show.Rpvalue whether to show the R-square and P-value, the value is one of c("TRUE", "FALSE").
-#' @param Rname to specify the character of R-square, the value is one of c(o, 1), corresponding to c(R^2, r^2).
-#' @param Pname  to specify the character of P-value, the value is one of c(o, 1), corresponding to c(P, p).
+#' @param Rname to specify the character of R-square, the value is one of c(0, 1), corresponding to c(r^2, R^2).
+#' @param Pname to specify the character of P-value, the value is one of c(0, 1), corresponding to c(p, P).
+#' @param xname to specify the character of "x" in equation, see Examples [case 5].
+#' @param yname to specify the character of "y" in equation, see Examples [case 5].
+#' @param yhat whether to add a hat symbol (^) on the top of "y" in equation. Default is FALSE.
 #' @param CI.fill fill the confidance interval? (TRUE by default, see 'CI.level' to control)
 #' @param CI.level level of confidence interval to use (0.95 by default)
 #' @param CI.alpha alpha value of fill color of confidence interval.
@@ -22,16 +25,16 @@
 #' @param CI.lty line type of confidence interval.
 #' @param CI.lwd line width of confidence interval.
 #' @param summary summarizing the model fits. Default is TRUE.
-#' @param text.col the color used for the legend text.
-#' @param ePos.x,ePos.y equation position. Default are: ePos.x = min(x), ePos.y = max(y). If no need to show equation, set ePos.x = NA.
+#' @param ePos.x,ePos.y equation position. Default as ePos.x = "topleft". If no need to show equation, set ePos.x = NA. It's same as those in \code{\link[graphics]{legend}}.
+#' @param text.col the color used for the equation text.
 #' @param eDigit the numbers of digits for equation parameters. Default is 5.
 #' @param eSize  font size in percentage of equation. Default is 1.
 #' @param xlab,ylab labels of x- and y-axis.
 #' @param las style of axis labels. (0=parallel, 1=all horizontal, 2=all perpendicular to axis, 3=all vertical)
 #' @param ... additional parameters to \code{\link[graphics]{plot}}, such as type, main, sub, pch, col.
 #' @import graphics
-#' @import scales
 #' @import stats
+#' @import scales
 #' @import investr
 #' @export
 #' @details The linear models (line2P, line3P, log2P) in this package are estimated by \code{\link[stats]{lm}} function, \cr while the nonlinear models (exp2P, exp3P, power2P, power3P) are estimated by \code{\link[stats]{nls}} function (i.e., least-squares method).\cr\cr The argument 'Pvalue.corrected' is workful for non-linear regression only.\cr\cr If "Pvalue.corrected = TRUE", the P-value is calculated by using "Residual Sum of Squares" and "Corrected Total Sum of Squares (i.e. sum((y-mean(y))^2))".\cr If "Pvalue.corrected = TRUE", the P-value is calculated by using "Residual Sum of Squares" and "Uncorrected Total Sum of Squares (i.e. sum(y^2))".
@@ -48,31 +51,42 @@
 #' @return NULL
 #' @examples
 #' library(basicTrendline)
-#' x1 <- 1:5
-#' x2 <- -2:2
-#' x3 <- c(101,105,140,200,660)
-#' x4 <- -5:-1
+#' x <- c(1, 3, 6,  9,  13,   17)
+#' y <- c(5, 8, 11, 13, 13.2, 13.5)
 #'
-#' y1 <- c(2,14,18,19,20)       # increasing convex  trend
-#' y2 <- c(-2,-14,-18,-19,-20)  # decreasing concave trend
-#' y3 <- c(2,4,16,38,89)        # increasing concave trend
-#' y4 <- c(-2,-4,-16,-38,-89)   # decreasing convex  trend
+#' # [case 1] default
+#' trendline(x, y, model="line2P", ePos.x = "topleft", summary=TRUE, eDigit=5)
+
+#' # [case 2]  draw lines of confidenc interval only (set CI.fill = FALSE)
+#' trendline(x, y, model="line3P", CI.fill = FALSE, CI.color = "black", CI.lty = 2, linecolor = "blue")
 #'
-#' # [case 1] default (plot, regression line, confidence interval)
-#' trendline(x1, y1, model="line2P", summary=TRUE, eDigit=10)
-#' # [case 2]  'eSize' is to change the font size of equation.
-#' trendline(x2, y2, model="line3P", summary=FALSE, linecolor="red", eSize=1.4)
-#' # [case 3]  lines of confidenc interval only (i.e. not fill)
-#' trendline(x3, y3, model="log2P", CI.fill = FALSE, CI.color = "black", CI.lty = 2)
-#' # [case 4]  trendliine only (i.e. without confidence interval)
-#' trendline(x4, y4, model="exp3P", ePos.x= -2, ePos.y = -50, CI.color = NA)
+#' # [case 3]  draw trendliine only (set CI.color = NA)
+#' trendline(x, y, model="log2P", ePos.x= "top", linecolor = "red", CI.color = NA)
 #'
-#' # [case 5]  show regression equation only
-#' trendline(x1, y1, model="line2P", show.equation = TRUE, show.Rpvalue = FALSE)
-#' # [case 6]  specify the name of parameters (R^2 or r^2; P or p) in regression equation
-#' trendline(x1, y1, model="line2P", Rname=1, Pname = 1)
-#' # [case 7]  don't show equation
-#' trendline(x1, y1, model="line2P", ePos.x = NA)
+#' # [case 4]  show regression equation only (set show.Rpvalue = FALSE)
+#' trendline(x, y, model="exp2P", show.equation = TRUE, show.Rpvalue = FALSE)
+#'
+#' # [case 5]  specify the name of parameters in equation
+#' # see Arguments c('xname', 'yname', 'yhat', 'Rname', 'Pname').
+#' trendline(x, y, model="exp3P", xname="T", yname=paste(delta^15,"N"),
+#'           yhat=FALSE, Rname=1, Pname=0, ePos.x = "bottom")
+#'
+#' # [case 6]  change the digits, font size, and color of equation.
+#' trendline(x, y, model="power2P", eDigit = 3, eSize = 1.4, text.col = "blue")
+#'
+#' # [case 7]  don't show equation (set ePos.x = NA)
+#' trendline(x, y, model="power3P", ePos.x = NA)
+#'
+#' ### NOT RUN 
+#' # [case 8]  set graphical parameters by par {graphics}
+#' 
+#' par(mgp=c(1.5,0.4,0), mar=c(3,3,1,1), tck=-0.01, cex.axis=0.9)
+#' 
+#' trendline(x, y)
+#' 
+#' dev.off()
+#' 
+#' ### END (NOT RUN)
 #'
 #' @author Weiping Mei, Guangchuang Yu
 #' @seealso  \code{\link{trendline}}, \code{\link{SSexp3P}}, \code{\link{SSpower3P}}, \code{\link[stats]{nls}}, \code{\link[stats]{selfStart}}, \code{\link[investr]{plotFit}}
@@ -80,17 +94,19 @@
 trendline <- function(x, y, model="line2P", Pvalue.corrected = TRUE,
                       linecolor = "blue", lty = 1, lwd = 1,
                       show.equation = TRUE, show.Rpvalue = TRUE,
-                      Rname = 0, Pname = 0,
+                      Rname = 1, Pname = 0, xname = "x", yname = "y", yhat = FALSE,
                       summary = TRUE,
-                      ePos.x = min(x), ePos.y = max(y), text.col="black", eDigit = 5, eSize = 1,
+                      ePos.x = NULL, ePos.y = NULL, text.col="black", eDigit = 5, eSize = 1,
                       CI.fill = TRUE, CI.level = 0.95, CI.color = "grey", CI.alpha = 1, CI.lty = 1, CI.lwd = 1,
                       las = 1, xlab=NULL, ylab=NULL, ...)
 {
   model=model
   if(is.null(xlab))  xlab = deparse(substitute(x)) else xlab = xlab
   if(is.null(ylab))  ylab = deparse(substitute(y)) else ylab = ylab
-  if(Rname==0)            Rname = "R"         else Rname = "r"
-  if(Pname==0)            Pname = "P"         else Pname = "p"
+  if(Rname==0)            Rname = "r"         else Rname = "R"
+  if(Pname==0)            Pname = "p"         else Pname = "P"
+  xname = substitute(xname)
+  if(yhat == TRUE)  yname = substitute(hat(yname)) else yname = substitute(yname)
 
   OK <- complete.cases(x, y)
   x <- x[OK]
@@ -134,13 +150,13 @@ if (model== c("line2P"))
   if (a>0)
   {
     if (b>=0)
-    {param[1] <- substitute(expression(italic("y") == aa~italic("x") + bb))[2]
-    }else{param[1] <- substitute(expression(italic("y") == aa~italic("x") - bb))[2]
+    {param[1] <- substitute(expression(italic(yname) == aa~italic(xname) + bb))[2]
+    }else{param[1] <- substitute(expression(italic(yname) == aa~italic(xname) - bb))[2]
     }
   }else{
     if (b>=0)
-    {param[1] <- substitute(expression(italic("y") == -aa~italic("x") + bb))[2]
-    }else{param[1] <- substitute(expression(italic("y") == -aa~italic("x") - bb))[2]
+    {param[1] <- substitute(expression(italic(yname) == -aa~italic(xname) + bb))[2]
+    }else{param[1] <- substitute(expression(italic(yname) == -aa~italic(xname) - bb))[2]
     }
   }
 
@@ -176,13 +192,13 @@ if (model== c("line2P"))
     if (b>=0)
     {
       if(c>=0)
-      {param[1] <- substitute(expression(italic("y") == aa~italic("x")^2 + bb~italic("x") +cc))[2]
-      }else{param[1] <- substitute(expression(italic("y") == aa~italic("x")^2 + bb~italic("x") -cc))[2]
+      {param[1] <- substitute(expression(italic(yname) == aa~italic(xname)^2 + bb~italic(xname) +cc))[2]
+      }else{param[1] <- substitute(expression(italic(yname) == aa~italic(xname)^2 + bb~italic(xname) -cc))[2]
       }
     }else{
       if(c>=0)
-      {param[1] <- substitute(expression(italic("y") == aa~italic("x")^2 - bb~italic("x") +cc))[2]
-      }else{param[1] <- substitute(expression(italic("y") == aa~italic("x")^2 - bb~italic("x") -cc))[2]
+      {param[1] <- substitute(expression(italic(yname) == aa~italic(xname)^2 - bb~italic(xname) +cc))[2]
+      }else{param[1] <- substitute(expression(italic(yname) == aa~italic(xname)^2 - bb~italic(xname) -cc))[2]
       }
     }
 
@@ -190,13 +206,13 @@ if (model== c("line2P"))
     if (b>=0)
     {
       if(c>=0)
-      {param[1] <- substitute(expression(italic("y") == -aa~italic("x")^2 + bb~italic("x") +cc))[2]
-      }else{param[1] <- substitute(expression(italic("y") == -aa~italic("x")^2 + bb~italic("x") -cc))[2]
+      {param[1] <- substitute(expression(italic(yname) == -aa~italic(xname)^2 + bb~italic(xname) +cc))[2]
+      }else{param[1] <- substitute(expression(italic(yname) == -aa~italic(xname)^2 + bb~italic(xname) -cc))[2]
       }
     }else{
       if(c>=0)
-      {param[1] <- substitute(expression(italic("y") == -aa~italic("x")^2 - bb~italic("x") +cc))[2]
-      }else{param[1] <- substitute(expression(italic("y") == -aa~italic("x")^2 - bb~italic("x") -cc))[2]
+      {param[1] <- substitute(expression(italic(yname) == -aa~italic(xname)^2 - bb~italic(xname) +cc))[2]
+      }else{param[1] <- substitute(expression(italic(yname) == -aa~italic(xname)^2 - bb~italic(xname) -cc))[2]
       }
     }
 
@@ -233,17 +249,17 @@ if (model== c("log2P"))
   {
     if (b>=0)
     {
-      param[1] <- substitute(expression(italic("y") == aa~"ln(x)" + bb))[2]
+      param[1] <- substitute(expression(italic(yname) == aa~"ln(x)" + bb))[2]
     }else{
-      param[1] <- substitute(expression(italic("y") == aa~"ln(x)" - bb))[2]
+      param[1] <- substitute(expression(italic(yname) == aa~"ln(x)" - bb))[2]
     }
 
   }else{
     if (b>=0)
     {
-      param[1] <- substitute(expression(italic("y") == -aa~"ln(x)" + bb))[2]
+      param[1] <- substitute(expression(italic(yname) == -aa~"ln(x)" + bb))[2]
     }else{
-      param[1] <- substitute(expression(italic("y") == -aa~"ln(x)" - bb))[2]
+      param[1] <- substitute(expression(italic(yname) == -aa~"ln(x)" - bb))[2]
     }
   }
 
@@ -279,17 +295,17 @@ if (model== c("log2P"))
     {
       if (b>=0)
       {
-          param[1] <- substitute(expression(italic("y") == aa~"e"^{bb~italic("x")}))[2]
+          param[1] <- substitute(expression(italic(yname) == aa~"e"^{bb~italic(xname)}))[2]
       }else{
-          param[1] <- substitute(expression(italic("y") == aa~"e"^{bb~italic("x")}))[2]
+          param[1] <- substitute(expression(italic(yname) == aa~"e"^{-bb~italic(xname)}))[2]
       }
 
     }else{
       if (b>=0)
       {
-          param[1] <- substitute(expression(italic("y") == -aa~"e"^{bb~italic("x")}))[2]
+          param[1] <- substitute(expression(italic(yname) == -aa~"e"^{bb~italic(xname)}))[2]
       }else{
-          param[1] <- substitute(expression(italic("y") == -aa~"e"^{bb~italic("x")}))[2]
+          param[1] <- substitute(expression(italic(yname) == -aa~"e"^{-bb~italic(xname)}))[2]
       }
     }
 
@@ -326,15 +342,15 @@ if (model== c("log2P"))
     if (b>=0)
     {
       if (c>=0){
-      param[1] <- substitute(expression(italic("y") == aa~"e"^{bb~italic("x")}~+cc))[2]
+      param[1] <- substitute(expression(italic(yname) == aa~"e"^{bb~italic(xname)}~+cc))[2]
       }else{
-      param[1] <- substitute(expression(italic("y") == aa~"e"^{bb~italic("x")}~-cc))[2]
+      param[1] <- substitute(expression(italic(yname) == aa~"e"^{bb~italic(xname)}~-cc))[2]
       }
     }else{
       if (c>=0){
-        param[1] <- substitute(expression(italic("y") == aa~"e"^{bb~italic("x")}~+cc))[2]
+        param[1] <- substitute(expression(italic(yname) == aa~"e"^{-bb~italic(xname)}~+cc))[2]
       }else{
-        param[1] <- substitute(expression(italic("y") == aa~"e"^{bb~italic("x")}~-cc))[2]
+        param[1] <- substitute(expression(italic(yname) == aa~"e"^{-bb~italic(xname)}~-cc))[2]
       }
     }
 
@@ -342,15 +358,15 @@ if (model== c("log2P"))
    if (b>=0)
    {
      if (c>=0){
-       param[1] <- substitute(expression(italic("y") == -aa~"e"^{bb~italic("x")}~+cc))[2]
+       param[1] <- substitute(expression(italic(yname) == -aa~"e"^{bb~italic(xname)}~+cc))[2]
      }else{
-       param[1] <- substitute(expression(italic("y") == -aa~"e"^{bb~italic("x")}~-cc))[2]
+       param[1] <- substitute(expression(italic(yname) == -aa~"e"^{bb~italic(xname)}~-cc))[2]
      }
    }else{
      if (c>=0){
-       param[1] <- substitute(expression(italic("y") == -aa~"e"^{bb~italic("x")}~+cc))[2]
+       param[1] <- substitute(expression(italic(yname) == -aa~"e"^{-bb~italic(xname)}~+cc))[2]
      }else{
-       param[1] <- substitute(expression(italic("y") == -aa~"e"^{bb~italic("x")}~-cc))[2]
+       param[1] <- substitute(expression(italic(yname) == -aa~"e"^{-bb~italic(xname)}~-cc))[2]
      }
    }
 }
@@ -379,9 +395,9 @@ if (model== "power2P")
 
       if (a>=0)
       {
-        param[1] <- substitute(expression(italic("y") == aa~italic("x")^b))[2]
+        param[1] <- substitute(expression(italic(yname) == aa~italic(xname)^b))[2]
       }else{
-        param[1] <- substitute(expression(italic("y") == -aa~italic("x")^b))[2]
+        param[1] <- substitute(expression(italic(yname) == -aa~italic(xname)^b))[2]
       }
       param[2] <- substitute(expression(italic(Rname)^2 == r2*","~~italic(Pname)~~pval))[2]
 
@@ -416,16 +432,16 @@ if (model== "power3P")
   if (a>=0)
    {
     if (c>=0){
-        param[1] <- substitute(expression(italic("y") == aa~italic("x")^b ~ + cc))[2]
+        param[1] <- substitute(expression(italic(yname) == aa~italic(xname)^b ~ + cc))[2]
         }else{
-        param[1] <- substitute(expression(italic("y") == aa~italic("x")^b ~ - cc))[2]
+        param[1] <- substitute(expression(italic(yname) == aa~italic(xname)^b ~ - cc))[2]
         }
 
   }else{
     if (c>=0){
-      param[1] <- substitute(expression(italic("y") == -aa~italic("x")^b ~ + cc))[2]
+      param[1] <- substitute(expression(italic(yname) == -aa~italic(xname)^b ~ + cc))[2]
     }else{
-      param[1] <- substitute(expression(italic("y") == -aa~italic("x")^b ~ - cc))[2]
+      param[1] <- substitute(expression(italic(yname) == -aa~italic(xname)^b ~ - cc))[2]
     }
   }
       param[2] <- substitute(expression(italic(Rname)^2 == r2*","~~italic(Pname)~~pval))[2]
@@ -456,11 +472,7 @@ if (model== "power3P")
 ### show legend
   if (show.equation == TRUE) param[1] = param[1]  else param[1]=NULL
   if (show.Rpvalue  == TRUE) param[2] = param[2]  else param[2]=NULL
-
-  if(!is.null(ePos.x & ePos.y)){
-    ePos.x = ePos.x
-    ePos.y = ePos.y
-  legend(x = ePos.x, y = ePos.y, text.col = text.col, legend = param, cex = eSize, bty = 'n')
-  }
+  if (is.null(ePos.x)) ePos.x = "topleft" else ePos.x = ePos.x
+  legend(ePos.x, ePos.y, text.col = text.col, legend = param, cex = eSize, bty = 'n')
 
 }

@@ -1,12 +1,15 @@
-Changes in version 2.0.2
+Changes in version 2.0.3
 ------------------------------------------------------------------------------
-Date: 2018-07-25
-* add several arguments to `trendline()` function
-* enable to draw confidence interval for regression models
-* enable to choose which parameter (equation, R-square and p-value) to show
-* enable to specify the character of R-square and P-vlaue (i.e. R^2 or r^2; P or p)
+Date: 2018-07-26
+* add several arguments to `trendline()` function, including show.equation, show.Rpvalue, Rname, Pname, xname, yname, yhat, CI.fill, CI.level, CI.alpha, CI.color, CI.lty, CI.lwd, ePos.x, ePos.y, las.
+* enable to draw confidence interval for regression models (arguments CI.fill, CI.level, etc.)
+* add 'show.equation' and show.Rpvale' arguments to enable to choose which parameter to show
+* add 'Rname' and 'Pname' arguments to specify the character of R-square and P-vlaue (i.e. R^2 or r^2; P or p)
+* add 'xname' and 'ynameto' arguments to specify the character of 'x' and 'y' in the equation
+* add 'yhat' argument to enable to add a hat symbol on the top of 'y' in the equation
 * add 'ePos.x' and 'ePos.y' arguments to specify the x and y co-ordinates of equation's position
 * deleted the 'ePos' argument 
+* add "Residual Sum of Squares" to the output of 'trendline_summary()' function
 
 
 Changes in version 1.2.0
