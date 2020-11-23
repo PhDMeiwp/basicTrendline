@@ -23,7 +23,7 @@
 # selfStart method for exp3P model (formula as y = a *exp(b*x)+ c)
 SSexp3P<-selfStart(
   function(predictor,a,b,c){a*exp(b*predictor)+c},
-  function(mCall,LHS, data)
+  function(mCall,LHS, data, ...) # added '...'
   {
     xy <- sortedXyData(mCall[["predictor"]],LHS, data)
     y=xy[,"y"]

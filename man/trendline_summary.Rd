@@ -4,8 +4,14 @@
 \alias{trendline_summary}
 \title{Summarized Results of Each Regression Model}
 \usage{
-trendline_summary(x, y, model = "line2P", Pvalue.corrected = TRUE,
-  summary = TRUE, eDigit = 5)
+trendline_summary(
+  x,
+  y,
+  model = "line2P",
+  Pvalue.corrected = TRUE,
+  summary = TRUE,
+  eDigit = 5
+)
 }
 \arguments{
 \item{x, y}{the x and y arguments provide the x and y coordinates for the plot. Any reasonable way of defining the coordinates is acceptable.}

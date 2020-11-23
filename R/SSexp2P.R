@@ -24,7 +24,7 @@
 # selfStart method for exp2P model (formula as y = a *exp(b*x))
 SSexp2P<-selfStart(
   function(predictor,a,b){a*exp(b*predictor)},
-  function(mCall,LHS, data)
+  function(mCall,LHS, data, ...) # added '...' to meet the update in 'nls' function in R package 'stats'.
   {
     xy <- sortedXyData(mCall[["predictor"]],LHS, data)
 

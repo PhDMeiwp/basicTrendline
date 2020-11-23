@@ -24,7 +24,7 @@
 # selfStart method for power2P model (formula as y = a *x^b)
 SSpower2P<-selfStart(
   function(predictor,a,b){a*predictor^b},
-  function(mCall,LHS, data)
+  function(mCall,LHS, data, ...) # added '...'
 {
   xy <- sortedXyData(mCall[["predictor"]],LHS, data)
 
