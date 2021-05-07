@@ -28,7 +28,7 @@ SSpower2P<-selfStart(
 {
   xy <- sortedXyData(mCall[["predictor"]],LHS, data)
 
-  if (min(x)>0){
+  if (min(xy[,"x"])>0){
   lmFit <- lm(log(xy[,"y"]) ~ log(xy[,"x"])) # both x and adjy values should be greater than 0.
   coefs <- coef(lmFit)
   a <- exp(coefs[1])  #intercept
