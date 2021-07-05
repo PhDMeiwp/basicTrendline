@@ -28,7 +28,7 @@ SSexp2P<-selfStart(
   {
     xy <- sortedXyData(mCall[["predictor"]],LHS, data)
 
-    if (min(y)>0){
+    if (min(xy[,"y"])>0){
     lmFit <- lm(log(xy[,"y"]) ~ xy[,"x"])
     coefs <- coef(lmFit)
     a <- exp(coefs[1])  #intercept
