@@ -23,7 +23,7 @@
 # selfStart method for power3P model (formula as y = a *x^b+ c)
 SSpower3P<-selfStart(
   function(predictor,a,b,c){a*predictor^b+c},
-  function(mCall,LHS, data)
+  function(mCall,LHS, data, ...) # added '...'
     {
       xy <- sortedXyData(mCall[["predictor"]],LHS, data)
       y=xy[,"y"]

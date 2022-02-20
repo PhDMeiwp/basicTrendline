@@ -9,27 +9,29 @@
 #' @param summary summarizing the model fits. Default is TRUE.
 #' @param eDigit the numbers of digits for summarized results. Default is 5.
 #' @import stats
+#' @import AICcmodavg
 #' @export
 #' @details The linear models (line2P, line3P, log2P) in this package are estimated by \code{\link[stats]{lm}} function, \cr while the nonlinear models (exp2P, exp3P, power2P, power3P) are estimated by \code{\link[stats]{nls}} function (i.e., least-squares method).\cr\cr The argument 'Pvalue.corrected' is workful for non-linear regression only.\cr\cr If "Pvalue.corrected = TRUE", the P-vlaue is calculated by using "Residual Sum of Squares" and "Corrected Total Sum of Squares (i.e. sum((y-mean(y))^2))".\cr If "Pvalue.corrected = TRUE", the P-vlaue is calculated by using "Residual Sum of Squares" and "Uncorrected Total Sum of Squares (i.e. sum(y^2))".
-
+#' @note If the output of 'AICc' is 'Inf', not an exact number, please try to expand the sample size of your dataset to >=6.
+#'
 #' @return R^2, indicates the R-Squared value of each regression model.
 #' @return p, indicates the p-value of each regression model.
 #' @return N, indicates the sample size.
-#' @return AIC or BIC, indicate the Akaike's Information Criterion or Bayesian Information Criterion for fitted model. Click \code{\link[stats]{AIC}} for details. The smaller the AIC or BIC, the better the model.
+#' @return AIC, AICc, or BIC, indicate the Akaike's Information Criterion (AIC), the second-order AIC (AICc) for small samples, or Bayesian Information Criterion (BIC) for fitted model. Click \code{\link[stats]{AIC}} for details. The smaller the AIC, AICc or BIC, the better the model.
 #' @return RSS, indicate the value of "Residual Sum of Squares".
 #' @examples
 #' library(basicTrendline)
-#' x1<-1:5
-#' x2<- -2:2
-#' x3<- c(101,105,140,200,660)
-#' x4<- -5:-1
-#' x5<- c(1,30,90,180,360)
+#' x1<-1:6
+#' x2<- -2:3
+#' x3<- c(101,105,140,200,660,1000)
+#' x4<- -6:-1
+#' x5<- c(1,30,90,180,360,800)
 #'
-#' y1<-c(2,14,18,19,20)        # increasing convex trend
-#' y2<- c(-2,-14,-18,-19,-20)  # decreasing concave trend
-#' y3<-c(2,4,16,38,89)         # increasing concave trend
-#' y4<-c(-2,-4,-16,-38,-89)    # decreasing convex trend
-#' y5<- c(600002,600014,600018,600019,600020) # high y values with low range.
+#' y1<-c(2,14,18,19,20,36)        # increasing convex trend
+#' y2<- c(-2,-14,-18,-19,-20,-21)  # decreasing concave trend
+#' y3<-c(2,4,16,38,89,160)         # increasing concave trend
+#' y4<-c(-2,-4,-16,-38,-89,-160)    # decreasing convex trend
+#' y5<- c(600002,600014,600018,600019,600020,600022) # high y values with low range.
 #'
 #' trendline_summary(x1,y1,model="line2P",summary=TRUE,eDigit=10)
 #' trendline_summary(x2,y2,model="line3P",summary=FALSE)
@@ -38,7 +40,7 @@
 #' trendline_summary(x5,y5,model="power3P")
 #'
 #' @author Weiping Mei, Guangchuang Yu
-#' @seealso  \code{\link{trendline}}, \code{\link{SSexp3P}}, \code{\link{SSpower3P}}, \code{\link[stats]{nls}}, \code{\link[stats]{selfStart}}
+#' @seealso  \code{\link{trendline}}, \code{\link{SSexp3P}}, \code{\link{SSpower3P}}, \code{\link[stats]{nls}}, \code{\link[stats]{selfStart}}, \code{\link[AICcmodavg]{AICc}}
 
 trendline_summary <- function(x,y,model="line2P", Pvalue.corrected=TRUE, summary=TRUE, eDigit=5)
 {
@@ -577,12 +579,14 @@ trendline_summary <- function(x,y,model="line2P", Pvalue.corrected=TRUE, summary
   AIC = as.numeric(format(AIC(fit), digits = eDigit))
   BIC = as.numeric(format(BIC(fit), digits = eDigit))
   ss.res=as.numeric(format(ss.res, digits = eDigit))
+  if (requireNamespace("AICcmodavg", quietly = TRUE)){
+    AICc = as.numeric(format(AICcmodavg::AICc(fit), digits = eDigit))}
 
   if (summary==TRUE){
-    ##print N, AIC, BIC and RSS
-    cat("\nN:", nrow, ", AIC:", AIC, ", BIC: ", BIC, "\nResidual Sum of Squares: ", ss.res,"\n")
+    ##print N, AIC, AICc, BIC and RSS
+    cat("\nN:", nrow, ", AIC:", AIC, ", AICc:", AICc, ", BIC: ", BIC, "\nResidual Sum of Squares: ", ss.res,"\n")
       }else{}
 
   invisible(list(formula=formula, parameter=param.out, R.squared=r2, adj.R.squared=adjr2, p.value = pval,
-                      N = nrow, AIC=AIC, BIC=BIC, RSS=ss.res))
+                      N = nrow, AIC=AIC, AICc=AICc, BIC=BIC, RSS=ss.res))
   }

@@ -1,3 +1,14 @@
+Changes in version 2.0.6
+------------------------------------------------------------------------------
+Date: 2022-02-19
+* add 'AICc' to trendline_summary function for small sample size of the data set.
+
+Changes in version 2.0.5
+------------------------------------------------------------------------------
+Date: 2020-11-23
+* add '...' to selfStart function(mCall,LHS, data, ...) to meet the update in 'nls' function in R package 'stats'.
+* divide 'show.Rpvalue' into tow parameters named 'show.Rsquare' and 'show.pvalue'.
+
 Changes in version 2.0.3
 ------------------------------------------------------------------------------
 Date: 2018-07-26
@@ -8,7 +19,7 @@ Date: 2018-07-26
 * add 'xname' and 'ynameto' arguments to specify the character of 'x' and 'y' in the equation
 * add 'yhat' argument to enable to add a hat symbol on the top of 'y' in the equation
 * add 'ePos.x' and 'ePos.y' arguments to specify the x and y co-ordinates of equation's position
-* deleted the 'ePos' argument 
+* deleted the 'ePos' argument
 * add "Residual Sum of Squares" to the output of 'trendline_summary()' function
 
 
@@ -20,6 +31,6 @@ Date: 2018-07-13
 * add `SSexp2P()` function
 * add `SSpower2P` function
 * add `Pvalue.corrected` argument in `trendline()` and `trendline_summary()` , for P-vlaue calculation for non-linear regression.
-* add `Details` in `trendline()` and `trendline_summary()` 
+* add `Details` in `trendline()` and `trendline_summary()`
 * add `...` argument in `trendline()` as same as those in `plot()`
 

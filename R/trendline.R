@@ -12,13 +12,14 @@
 #' @param lty line type. lty can be specified using either text c("blank","solid","dashed","dotted","dotdash","longdash","twodash") or number c(0, 1, 2, 3, 4, 5, 6). Note that lty = "solid" is identical to lty=1.
 #' @param lwd line width. Default is 1.
 #' @param show.equation whether to show the regression equation, the value is one of c("TRUE", "FALSE").
-#' @param show.Rpvalue whether to show the R-square and P-value, the value is one of c("TRUE", "FALSE").
+#' @param show.Rsquare whether to show the R-square, the value is one of c("TRUE", "FALSE").
+#' @param show.pvalue whether to show the P-value, the value is one of c("TRUE", "FALSE").
 #' @param Rname to specify the character of R-square, the value is one of c(0, 1), corresponding to c(r^2, R^2).
 #' @param Pname to specify the character of P-value, the value is one of c(0, 1), corresponding to c(p, P).
 #' @param xname to specify the character of "x" in equation, see Examples [case 5].
 #' @param yname to specify the character of "y" in equation, see Examples [case 5].
 #' @param yhat whether to add a hat symbol (^) on the top of "y" in equation. Default is FALSE.
-#' @param CI.fill fill the confidance interval? (TRUE by default, see 'CI.level' to control)
+#' @param CI.fill fill the confidence interval? (TRUE by default, see 'CI.level' to control)
 #' @param CI.level level of confidence interval to use (0.95 by default)
 #' @param CI.alpha alpha value of fill color of confidence interval.
 #' @param CI.color line or fill color of confidence interval.
@@ -37,7 +38,7 @@
 #' @import scales
 #' @import investr
 #' @export
-#' @details The linear models (line2P, line3P, log2P) in this package are estimated by \code{\link[stats]{lm}} function, \cr while the nonlinear models (exp2P, exp3P, power2P, power3P) are estimated by \code{\link[stats]{nls}} function (i.e., least-squares method).\cr\cr The argument 'Pvalue.corrected' is workful for non-linear regression only.\cr\cr If "Pvalue.corrected = TRUE", the P-value is calculated by using "Residual Sum of Squares" and "Corrected Total Sum of Squares (i.e. sum((y-mean(y))^2))".\cr If "Pvalue.corrected = TRUE", the P-value is calculated by using "Residual Sum of Squares" and "Uncorrected Total Sum of Squares (i.e. sum(y^2))".
+#' @details The linear models (line2P, line3P, log2P) in this package are estimated by \code{\link[stats]{lm}} function, \cr while the nonlinear models (exp2P, exp3P, power2P, power3P) are estimated by \code{\link[stats]{nls}} function (i.e., least-squares method).\cr\cr The argument 'Pvalue.corrected' is only valid for non-linear regression.\cr\cr If "Pvalue.corrected = TRUE", the P-value is calculated by using "Residual Sum of Squares" and "Corrected Total Sum of Squares (i.e. sum((y-mean(y))^2))".\cr If "Pvalue.corrected = FALSE", the P-value is calculated by using "Residual Sum of Squares" and "Uncorrected Total Sum of Squares (i.e. sum(y^2))".
 #' @note
 #' Confidence intervals for nonlinear regression (i.e., objects of class
 #' \code{nls}) are based on the linear approximation described in Bates & Watts (2007) and Greenwell & Schubert-Kabban (2014).
@@ -51,53 +52,51 @@
 #' @return NULL
 #' @examples
 #' library(basicTrendline)
-#' x <- c(1, 3, 6,  9,  13,   17)
+#' x <- c(1, 3, 6, 9,  13,   17)
 #' y <- c(5, 8, 11, 13, 13.2, 13.5)
 #'
-#' # [case 1] default
+#' ### [case 0]  ggplot2-like trendline by par {graphics}
+#'
+#' par(mgp=c(1.5,0.4,0), mar=c(3,3,1,1), tck=-0.01, cex.axis=0.9)
+#'
+#' trendline(x, y, "exp3P")
+#'
+#' # dev.off()
+#'
+#' ### [case 1] default
 #' trendline(x, y, model="line2P", ePos.x = "topleft", summary=TRUE, eDigit=5)
-
-#' # [case 2]  draw lines of confidenc interval only (set CI.fill = FALSE)
+#'
+#' ### [case 2]  draw lines of confidence interval only (set CI.fill = FALSE)
 #' trendline(x, y, model="line3P", CI.fill = FALSE, CI.color = "black", CI.lty = 2, linecolor = "blue")
 #'
-#' # [case 3]  draw trendliine only (set CI.color = NA)
+#' ### [case 3]  draw trendliine only (set CI.color = NA)
 #' trendline(x, y, model="log2P", ePos.x= "top", linecolor = "red", CI.color = NA)
 #'
-#' # [case 4]  show regression equation only (set show.Rpvalue = FALSE)
-#' trendline(x, y, model="exp2P", show.equation = TRUE, show.Rpvalue = FALSE)
+#' ### [case 4]  show regression equation only
+#' trendline(x, y, model="exp2P", show.Rsquare = FALSE, show.pvalue = FALSE)
 #'
-#' # [case 5]  specify the name of parameters in equation
+#' ### [case 5]  specify the name of parameters in equation
 #' # see Arguments c('xname', 'yname', 'yhat', 'Rname', 'Pname').
 #' trendline(x, y, model="exp3P", xname="T", yname=paste(delta^15,"N"),
 #'           yhat=FALSE, Rname=1, Pname=0, ePos.x = "bottom")
 #'
-#' # [case 6]  change the digits, font size, and color of equation.
+#' ### [case 6]  change the digits, font size, and color of equation.
 #' trendline(x, y, model="power2P", eDigit = 3, eSize = 1.4, text.col = "blue")
 #'
-#' # [case 7]  don't show equation (set ePos.x = NA)
+#' ### [case 7]  don't show equation (set ePos.x = NA)
 #' trendline(x, y, model="power3P", ePos.x = NA)
 #'
-#' ### NOT RUN 
-#' # [case 8]  set graphical parameters by par {graphics}
-#' 
-#' par(mgp=c(1.5,0.4,0), mar=c(3,3,1,1), tck=-0.01, cex.axis=0.9)
-#' 
-#' trendline(x, y)
-#' 
-#' dev.off()
-#' 
-#' ### END (NOT RUN)
 #'
 #' @author Weiping Mei, Guangchuang Yu
 #' @seealso  \code{\link{trendline}}, \code{\link{SSexp3P}}, \code{\link{SSpower3P}}, \code{\link[stats]{nls}}, \code{\link[stats]{selfStart}}, \code{\link[investr]{plotFit}}
 
 trendline <- function(x, y, model="line2P", Pvalue.corrected = TRUE,
                       linecolor = "blue", lty = 1, lwd = 1,
-                      show.equation = TRUE, show.Rpvalue = TRUE,
+                      show.equation = TRUE, show.Rsquare = TRUE, show.pvalue = TRUE,
                       Rname = 1, Pname = 0, xname = "x", yname = "y", yhat = FALSE,
                       summary = TRUE,
                       ePos.x = NULL, ePos.y = NULL, text.col="black", eDigit = 5, eSize = 1,
-                      CI.fill = TRUE, CI.level = 0.95, CI.color = "grey", CI.alpha = 1, CI.lty = 1, CI.lwd = 1,
+                      CI.fill = TRUE, CI.level = 0.95, CI.color = "grey90", CI.alpha = 1, CI.lty = 1, CI.lwd = 1,
                       las = 1, xlab=NULL, ylab=NULL, ...)
 {
   model=model
@@ -159,9 +158,10 @@ if (model== c("line2P"))
     }else{param[1] <- substitute(expression(italic(yname) == -aa~italic(xname) - bb))[2]
     }
   }
-
-  param[2] <- substitute(expression(italic(Rname)^2 == r2*","~~italic(Pname)~~pval))[2]
-
+  if (show.Rsquare  == TRUE & show.pvalue  == FALSE) param[2] = substitute(expression(italic(Rname)^2 == r2))[2]
+  if (show.Rsquare  == FALSE & show.pvalue  == TRUE) param[2] =substitute(expression(italic(Pname)~~pval))[2]
+  if (show.Rsquare  == TRUE & show.pvalue  == TRUE) param[2] = substitute(expression(italic(Rname)^2 == r2*","~~italic(Pname)~~pval))[2]
+  if (show.Rsquare  == FALSE & show.pvalue  == FALSE) param[2] =NULL
  }
 
 # 2) model="line3P"
@@ -217,8 +217,10 @@ if (model== c("line2P"))
     }
 
   }
-
-    param[2] <- substitute(expression(italic(Rname)^2 == r2*","~~italic(Pname)~~pval*"            "))[2]
+    if (show.Rsquare  == TRUE & show.pvalue  == FALSE) param[2] = substitute(expression(italic(Rname)^2 == r2))[2]
+    if (show.Rsquare  == FALSE & show.pvalue  == TRUE) param[2] =substitute(expression(italic(Pname)~~pval))[2]
+    if (show.Rsquare  == TRUE & show.pvalue  == TRUE) param[2] = substitute(expression(italic(Rname)^2 == r2*","~~italic(Pname)~~pval))[2]
+    if (show.Rsquare  == FALSE & show.pvalue  == FALSE) param[2] =NULL
 
   }
 
@@ -262,8 +264,10 @@ if (model== c("log2P"))
       param[1] <- substitute(expression(italic(yname) == -aa~"ln(x)" - bb))[2]
     }
   }
-
-    param[2] <- substitute(expression(italic(Rname)^2 == r2*","~~italic(Pname)~~pval))[2]
+    if (show.Rsquare  == TRUE & show.pvalue  == FALSE) param[2] = substitute(expression(italic(Rname)^2 == r2))[2]
+    if (show.Rsquare  == FALSE & show.pvalue  == TRUE) param[2] =substitute(expression(italic(Pname)~~pval))[2]
+    if (show.Rsquare  == TRUE & show.pvalue  == TRUE) param[2] = substitute(expression(italic(Rname)^2 == r2*","~~italic(Pname)~~pval))[2]
+    if (show.Rsquare  == FALSE & show.pvalue  == FALSE) param[2] =NULL
 
  }else{
     stop("
@@ -308,8 +312,10 @@ if (model== c("log2P"))
           param[1] <- substitute(expression(italic(yname) == -aa~"e"^{-bb~italic(xname)}))[2]
       }
     }
-
-    param[2] <- substitute(expression(italic(Rname)^2 == r2*","~~italic(Pname)~~pval))[2]
+    if (show.Rsquare  == TRUE & show.pvalue  == FALSE) param[2] = substitute(expression(italic(Rname)^2 == r2))[2]
+    if (show.Rsquare  == FALSE & show.pvalue  == TRUE) param[2] =substitute(expression(italic(Pname)~~pval))[2]
+    if (show.Rsquare  == TRUE & show.pvalue  == TRUE) param[2] = substitute(expression(italic(Rname)^2 == r2*","~~italic(Pname)~~pval))[2]
+    if (show.Rsquare  == FALSE & show.pvalue  == FALSE) param[2] =NULL
 
   }
 
@@ -370,7 +376,11 @@ if (model== c("log2P"))
      }
    }
 }
-    param[2] <- substitute(expression(italic(Rname)^2 == r2*","~~italic(Pname)~~pval))[2]
+    if (show.Rsquare  == TRUE & show.pvalue  == FALSE) param[2] = substitute(expression(italic(Rname)^2 == r2))[2]
+    if (show.Rsquare  == FALSE & show.pvalue  == TRUE) param[2] =substitute(expression(italic(Pname)~~pval))[2]
+    if (show.Rsquare  == TRUE & show.pvalue  == TRUE) param[2] = substitute(expression(italic(Rname)^2 == r2*","~~italic(Pname)~~pval))[2]
+    if (show.Rsquare  == FALSE & show.pvalue  == FALSE) param[2] =NULL
+
   }
 
 
@@ -399,7 +409,10 @@ if (model== "power2P")
       }else{
         param[1] <- substitute(expression(italic(yname) == -aa~italic(xname)^b))[2]
       }
-      param[2] <- substitute(expression(italic(Rname)^2 == r2*","~~italic(Pname)~~pval))[2]
+      if (show.Rsquare  == TRUE & show.pvalue  == FALSE) param[2] = substitute(expression(italic(Rname)^2 == r2))[2]
+      if (show.Rsquare  == FALSE & show.pvalue  == TRUE) param[2] =substitute(expression(italic(Pname)~~pval))[2]
+      if (show.Rsquare  == TRUE & show.pvalue  == TRUE) param[2] = substitute(expression(italic(Rname)^2 == r2*","~~italic(Pname)~~pval))[2]
+      if (show.Rsquare  == FALSE & show.pvalue  == FALSE) param[2] =NULL
 
     }else{
       stop("
@@ -444,7 +457,10 @@ if (model== "power3P")
       param[1] <- substitute(expression(italic(yname) == -aa~italic(xname)^b ~ - cc))[2]
     }
   }
-      param[2] <- substitute(expression(italic(Rname)^2 == r2*","~~italic(Pname)~~pval))[2]
+      if (show.Rsquare  == TRUE & show.pvalue  == FALSE) param[2] = substitute(expression(italic(Rname)^2 == r2))[2]
+      if (show.Rsquare  == FALSE & show.pvalue  == TRUE) param[2] =substitute(expression(italic(Pname)~~pval))[2]
+      if (show.Rsquare  == TRUE & show.pvalue  == TRUE) param[2] = substitute(expression(italic(Rname)^2 == r2*","~~italic(Pname)~~pval))[2]
+      if (show.Rsquare  == FALSE & show.pvalue  == FALSE) param[2] =NULL
 
     }else{
     stop("
@@ -470,8 +486,9 @@ if (model== "power3P")
   }
 
 ### show legend
-  if (show.equation == TRUE) param[1] = param[1]  else param[1]=NULL
-  if (show.Rpvalue  == TRUE) param[2] = param[2]  else param[2]=NULL
+if (show.equation == TRUE) param[1] = param[1] else param[1]=NULL
+#  if (show.Rsquare  == TRUE) param[2] = param[2] else param[2]=NULL
+#  if (show.pvalue  == TRUE) param[3] = param[3]  else param[3]=NULL
   if (is.null(ePos.x)) ePos.x = "topleft" else ePos.x = ePos.x
   legend(ePos.x, ePos.y, text.col = text.col, legend = param, cex = eSize, bty = 'n')
 

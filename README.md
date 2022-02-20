@@ -33,27 +33,10 @@ Or the development version from github:
 	devtools::install_github("PhDMeiwp/basicTrendline@master", force = TRUE)
 
 
-## Changes in version 2.0.3	
+## Changes in version 2.0.5 (2020-11-23)
 
-- add several arguments to `trendline()` function, including show.equation, show.Rpvalue, Rname, Pname, xname, yname, yhat, CI.fill, CI.level, CI.alpha, CI.color, CI.lty, CI.lwd, ePos.x, ePos.y, las.
-- enable to draw confidence interval for regression models (arguments CI.fill, CI.level, etc.)
-- add 'show.equation' and show.Rpvale' arguments to enable to choose which parameter to show
-- add 'Rname' and 'Pname' arguments to specify the character of R-square and P-vlaue (i.e. R^2 or r^2; P or p)
-- add 'xname' and 'ynameto' arguments to specify the character of 'x' and 'y' in the equation
-- add 'yhat' argument to enable to add a hat symbol on the top of 'y' in the equation
-- add 'ePos.x' and 'ePos.y' arguments to specify the x and y co-ordinates of equation's position
-- deleted the 'ePos' argument 
-- add "Residual Sum of Squares" to the output of 'trendline_summary()' function
+- divide 'show.Rpvalue' into tow parameters named 'show.Rsquare' and 'show.pvalue'.
 
-## Changes in version 1.2.0
-
-- change the expression for `model` of `exp3P` using a supscript
-- add `trendline_summary()` function
-- add `SSexp2P()` function
-- add `SSpower2P` function
-- add `Pvalue.corrected` argument in `trendline()` and `trendline_summary()` , for P-vlaue calculation for non-linear regression.
-- add `Details` in `trendline()` and `trendline_summary()` 
-- add `...` argument in `trendline()` as same as those in `plot()`
 
 ---
 
@@ -62,6 +45,15 @@ Or the development version from github:
 		library(basicTrendline)
 		x <- c(1, 3, 6,  9,  13,   17)
 		y <- c(5, 8, 11, 13, 13.2, 13.5)
+
+
+# [case 0]  ggplot2-like trendline by par {graphics}
+
+		par(mgp=c(1.5,0.4,0), mar=c(3,3,1,1), tck=-0.01, cex.axis=0.9)
+		trendline(x, y, "exp3P")
+		# dev.off()
+
+<img src="docs/images/case0.png" width="490"/>
 
 # [case 1] default
 		trendline(x, y, model="line2P", ePos.x = "topleft", summary=TRUE, eDigit=5)
@@ -79,7 +71,7 @@ Or the development version from github:
 <img src="docs/images/case3.png" width="490"/>
 
 # [case 4]  show regression equation only (set show.Rpvalue = FALSE)
-		trendline(x, y, model="exp2P", show.equation = TRUE, show.Rpvalue = FALSE)
+		trendline(x, y, model="exp2P", show.equation = TRUE, show.Rsquare = FALSE, show.pvalue = FALSE)
 
 <img src="docs/images/case4.png" width="490"/>
 
@@ -100,17 +92,6 @@ Or the development version from github:
 
 <img src="docs/images/case7.png" width="490"/>
 
-# [case 8]  set graphical parameters by par {graphics}
-		### NOT RUN
-		par(mgp=c(1.5,0.4,0), mar=c(3,3,1,1), tck=-0.01, cex.axis=0.9)
-
-		trendline(x, y)
-
-		dev.off()
-
-		### END (NOT RUN)
-	
-<img src="docs/images/case8.png" width="490"/>
 
 ---
 
@@ -140,7 +121,7 @@ Besides, the summarized results of each fitted model are also output by default.
 
      trendline(x, y, model = "line2P", Pvalue.corrected = TRUE,
 			linecolor = "blue", lty = 1, lwd = 1, 
-			show.equation = TRUE, show.Rpvalue = TRUE, 
+			show.equation = TRUE, show.Rsquare = TRUE, show.pvalue = TRUE,
 			Rname = 1, Pname = 0, xname = "x", yname = "y",
 			yhat = FALSE, 
 			summary = TRUE, 
@@ -178,8 +159,11 @@ line width. Default is 1.
 <br>**show.equation**	<br>
 whether to show the regression equation, the value is one of c("TRUE", "FALSE").
 
-<br>**show.Rpvalue**	<br>
-whether to show the R-square and P-value, the value is one of c("TRUE", "FALSE").
+<br>**show.Rsquare**	<br>
+whether to show the R-square, the value is one of c("TRUE", "FALSE").
+
+<br>**show.pvalue**	<br>
+whether to show the P-value, the value is one of c("TRUE", "FALSE").
 
 <br>**Rname**	<br>	
 to specify the character of R-square, the value is one of c(0, 1), corresponding to c(r^2, R^2).
@@ -241,9 +225,9 @@ additional parameters to plot,such as type, main, sub, xlab, ylab, col.
 ## Details
 
 The linear models (line2P, line3P, log2P) in this package are estimated by **lm** function, while the **nonlinear models (exp2P, exp3P, power2P, power3P)** are estimated by **nls** function (i.e., **least-squares method**).
-<br>The argument 'Pvalue.corrected' is workful for non-linear regression only.
+<br>The argument 'Pvalue.corrected' is only valid for non-linear regression.
 <br>If "Pvalue.corrected = TRUE", the P-vlaue is calculated by using "Residual Sum of Squares" and "Corrected Total Sum of Squares (i.e. sum((y-mean(y))^2))".
-<br>If "Pvalue.corrected = TRUE", the P-vlaue is calculated by using "Residual Sum of Squares" and "Uncorrected Total Sum of Squares (i.e. sum(y^2))".
+<br>If "Pvalue.corrected = FALSE", the P-vlaue is calculated by using "Residual Sum of Squares" and "Uncorrected Total Sum of Squares (i.e. sum(y^2))".
 
 ## Note
 
