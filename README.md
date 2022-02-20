@@ -33,9 +33,9 @@ Or the development version from github:
 	devtools::install_github("PhDMeiwp/basicTrendline@master", force = TRUE)
 
 
-## Changes in version 2.0.5 (2020-11-23)
+## Changes in version 2.0.6 (2022-02-19)
 
-- divide 'show.Rpvalue' into tow parameters named 'show.Rsquare' and 'show.pvalue'.
+- add 'AICc' to trendline_summary function for small sample size of the data set.
 
 
 ---
