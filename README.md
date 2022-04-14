@@ -2,18 +2,11 @@
 
  <img src="docs/images/basicTrendline.hex.png"  height="200" align="right">
 
-[![cran version](http://www.r-pkg.org/badges/version/basicTrendline)](http://cran.rstudio.com/web/packages/basicTrendline) 
 [![rstudio mirror downloads](http://cranlogs.r-pkg.org/badges/grand-total/basicTrendline)](https://github.com/metacran/cranlogs.app)
-[![rstudio mirror downloads](http://cranlogs.r-pkg.org/badges/basicTrendline)](https://github.com/metacran/cranlogs.app)
-[![HitCount](http://hits.dwyl.io/PhDMeiwp/basicTrendline.svg)](http://hits.dwyl.io/PhDMeiwp/basicTrendline)
-
 
 ## Authors
 
-<img src="https://github.com/PhDMeiwp/PhDMeiwp.github.io/blob/hexo/Common_images/Mei_Logo.JPG" width="70"/>
-
 Weiping MEI https://PhDMeiwp.github.io
-
 
 Graduate School of Fisheries and Environmental Sciences, Nagasaki University
 
@@ -23,11 +16,7 @@ Mei W, Yu G, Lai J, Rao Q, Umezawa Y (2018) basicTrendline: Add Trendline and Co
 
 ## Installation
 
-Get the released version from CRAN:
-
-	install.packages("basicTrendline")
-
-Or the development version from github:
+from github:
 	
 	install.packages("devtools")
 	devtools::install_github("PhDMeiwp/basicTrendline@master", force = TRUE)
